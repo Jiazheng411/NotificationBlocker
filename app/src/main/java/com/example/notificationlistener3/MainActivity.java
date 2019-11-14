@@ -8,11 +8,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.notificationlistener3.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    Button settingButton;
+    Button startFocusModeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,26 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "listening", Toast.LENGTH_SHORT);
             toast.show();
         }
+
+        settingButton = findViewById( R.id.settingButton );
+        startFocusModeButton = findViewById( R.id.startFocusModeButton );
+
+        settingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( MainActivity.this, setting_light_acticity );
+                startActivity( intent );
+            }
+        });
+
+        startFocusModeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( MainActivity.this, focus_mode_activity );
+                startActivity( intent );
+            }
+        });
+
     }
 
 
