@@ -1,3 +1,4 @@
+// this is the main activity
 package com.example.notificationlistener3;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import com.example.notificationlistener3.R;
 
 public class MainActivity extends AppCompatActivity {
 
