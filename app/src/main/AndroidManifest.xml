@@ -23,6 +23,9 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+        <activity android:name=".FocusModeActivity"></activity>
+        <activity android:name=".RestTimeActivity"></activity>
+        <activity android:name=".SettingMainActivity"></activity>
     </application>
 
 </manifest>
