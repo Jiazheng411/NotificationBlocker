@@ -3,16 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".RestTimeActivity">
 
     <Button
-        android:id="@+id/settingButton"
+        android:id="@+id/buttonSettingRestPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="#FFFFFF"
-        android:text="Settings"
+        android:text="@string/settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,6 +21,7 @@
         android:id="@+id/imageView3"
         android:layout_width="732dp"
         android:layout_height="420dp"
+        android:contentDescription="@string/rest_image_desc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,13 +29,13 @@
         app:srcCompat="@color/green_free" />
 
     <Button
-        android:id="@+id/refocusButton"
-        android:layout_width="240dp"
-        android:layout_height="80dp"
-        android:background="#BEF5A7"
-        android:text="refocus now"
-        android:textColor="#4F8E35"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="402dp"
-        tools:layout_editor_absoluteY="260dp" />
+        android:id="@+id/buttonStartFocusModeRestPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/start_focus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

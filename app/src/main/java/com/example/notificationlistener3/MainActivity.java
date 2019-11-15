@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -31,13 +32,14 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
         }
 
-        settingButton = findViewById( R.id.settingButton );
-        startFocusModeButton = findViewById( R.id.startFocusModeButton );
+        settingButton = findViewById( R.id.buttonSetting );
+        startFocusModeButton = findViewById( R.id.buttonStartFocusMode );
 
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( MainActivity.this, setting_light_acticity );
+                Log.i("MainActivity", "setting button clicked");
+                Intent intent = new Intent( MainActivity.this, SettingMainActivity.class);
                 startActivity( intent );
             }
         });
@@ -45,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         startFocusModeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( MainActivity.this, focus_mode_activity );
+                Log.i("MainActivity", "startFocusMode button clicked");
+                Intent intent = new Intent( MainActivity.this, FocusModeActivity.class );
                 startActivity( intent );
             }
         });
