@@ -33,14 +33,10 @@ public class SettingNotificationActivity extends AppCompatActivity {
         setContentView(R.layout.setting_notification_activity);
 
         mPreferences = getSharedPreferences("setting",MODE_PRIVATE);
-
+        manager = getPackageManager();
         applications = manager.getInstalledApplications(0);
-        mPreferences.edit().remove(Util_String.IS_BLOCKING).apply();
-
-
 
         recyclerView = (RecyclerView) findViewById(R.id.appRecyclerView);
-
 
 
         // use this setting to improve performance if you know that changes
