@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -18,11 +20,17 @@ import android.widget.Toast;
 
 import com.example.notificationlistener3.R;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     ImageView settingButton;
     Button startFocusModeButton;
     SharedPreferences mSharedPreferences;
+    PackageManager manager;
+    List<ApplicationInfo> applications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +77,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
-        boolean contains = mSharedPreferences.contains(Util_String.IS_BLOCKING);
-        Log.i("MainActivity", "Shared preference contains key is_blocking" + contains);
+        mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        String appsNotBlocking = mSharedPreferences.getString(Util_String.APPS_RECEIVing_NOTIFICATION, "");
+        HashSet<String> appsNotBlocked = new HashSet<>(Arrays.asList(appsNotBlocking.split(";")));
+        appsNotBlocked.add("com.android.calendar");
+        appsNotBlocked.add("come.google.android.calendar");
+        String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(Util_String.APPS_RECEIVing_NOTIFICATION, AppsNotBlocking);
+        editor.apply();
+        Log.i("MainActivity", "edit shared preference apps_receiving_notification, receive calender notification by default");
+
     }
+
 
     // notification management permission checking
     private boolean isEnabled() {
@@ -91,4 +108,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }
