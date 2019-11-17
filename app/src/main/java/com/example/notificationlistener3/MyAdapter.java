@@ -65,6 +65,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,6 +80,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     private LayoutInflater mLayoutInflater;
     private List<ApplicationInfo> apps;
     private SharedPreferences mSharedPreferences;
+    private onCheckboxClicked checkedListener;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -88,17 +90,36 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         ImageView icon;
         TextView name;
         CheckBox status;
-        public MyViewHolder(View view) {
+        onCheckboxClicked listener;
+
+        public MyViewHolder(View view, final onCheckboxClicked listener) {
             super(view);
+            this.listener = listener;
             icon = view.findViewById(R.id.app_icon);
             name = view.findViewById(R.id.app_name);
             status = view.findViewById(R.id.app_status);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    status.performClick();
+                }
+            });
+
+            status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    MyViewHolder.this.listener.OnCheckboxClicked(getLayoutPosition(), isChecked);
+                }
+            });
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(Context context, List<ApplicationInfo> apps) {
+    public MyAdapter(Context context, List<ApplicationInfo> apps, onCheckboxClicked listener) {
         this.apps = apps;
+        this.checkedListener = listener;
         packageManager = context.getPackageManager();
         mLayoutInflater = LayoutInflater.from(context);
         mSharedPreferences = context.getSharedPreferences("setting", 0);
@@ -110,7 +131,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                                                      int viewType) {
         // create a new view
         View view = mLayoutInflater.inflate(R.layout.single_app_row,parent,false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, this.checkedListener);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -130,5 +151,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     @Override
     public int getItemCount() {
         return apps.size();
+    }
+
+    public ApplicationInfo getItem(int position) {
+        return apps.get(position);
     }
 }

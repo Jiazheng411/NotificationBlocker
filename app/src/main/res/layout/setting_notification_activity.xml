@@ -7,6 +7,8 @@
         android:id="@+id/notificationReceive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="23sp"
+        android:background="@color/blue_main"
         android:text="@string/notification_receive" />
 
     <SearchView
