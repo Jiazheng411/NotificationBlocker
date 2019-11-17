@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#009688"
+        android:text="Settings"
+        android:textColor="@android:color/background_light" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="163dp" />
+
+    <Button
+        android:id="@+id/lampSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lamp Setteings" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="88dp" />
+
+    <Button
+        android:id="@+id/timeSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Time Settings" />
+</LinearLayout>
