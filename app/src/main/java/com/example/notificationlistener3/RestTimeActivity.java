@@ -7,12 +7,13 @@ import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RestTimeActivity extends AppCompatActivity {
-    Button buttonSetting;
+    ImageView buttonSetting;
     Button buttonStartFocusMode;
 
     @Override
@@ -20,7 +21,7 @@ public class RestTimeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rest_time_activity);
         Log.i("RestTimeActivity", "oncreate");
-        buttonSetting = findViewById(R.id.buttonSettingRestPage);
+        buttonSetting = findViewById(R.id.buttonSetting);
         buttonStartFocusMode = findViewById(R.id.buttonStartFocusModeRestPage);
 
         buttonSetting.setOnClickListener(new View.OnClickListener() {

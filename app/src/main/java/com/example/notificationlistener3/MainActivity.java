@@ -11,13 +11,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.notificationlistener3.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button settingButton;
+    ImageView settingButton;
     Button startFocusModeButton;
 
     @Override

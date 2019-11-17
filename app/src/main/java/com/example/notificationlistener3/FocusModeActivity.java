@@ -6,12 +6,13 @@ import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class FocusModeActivity extends AppCompatActivity {
-    Button settingButton;
+    ImageView settingButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
