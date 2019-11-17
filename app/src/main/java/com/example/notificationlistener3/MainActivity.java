@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView settingButton;
     Button startFocusModeButton;
+    SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
         settingButton = findViewById( R.id.buttonSetting );
         startFocusModeButton = findViewById( R.id.buttonStartFocusMode );
+
+        mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        boolean is_blocking = false;
+        editor.putBoolean(Util_String.IS_BLOCKING, is_blocking);
+        editor.apply();
+        Log.i("MainActivity", "edit shared preference is_blocking, not blocking notification");
 
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
+        boolean contains = mSharedPreferences.contains(Util_String.IS_BLOCKING);
+        Log.i("MainActivity", "Shared preference contains key is_blocking" + contains);
+    }
 
     // notification management permission checking
     private boolean isEnabled() {

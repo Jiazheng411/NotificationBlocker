@@ -1,21 +1,47 @@
 package com.example.notificationlistener3;
 
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.widget.ImageView;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class SettingNotificationActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private PackageManager manager;
+
+    private SearchView searchView;
+    private ImageView empty;
+
+    private SharedPreferences mPreferences;
+
+    private List<ApplicationInfo> applications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_notification_activity);
+
+        mPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+
+        applications = manager.getInstalledApplications(0);
+        mPreferences.edit().remove(Util_String.IS_BLOCKING).apply();
+
+
+
         recyclerView = (RecyclerView) findViewById(R.id.appRecyclerView);
+
+
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
