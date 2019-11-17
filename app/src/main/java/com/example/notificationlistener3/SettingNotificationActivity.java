@@ -2,6 +2,7 @@ package com.example.notificationlistener3;
 
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -46,11 +47,10 @@ public class SettingNotificationActivity extends AppCompatActivity {
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        String[] myDataset = {"1","2","3"};
+        List<ApplicationInfo> apps = manager.getInstalledApplications(0);
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
+        mAdapter = new MyAdapter(SettingNotificationActivity.this, apps);
         recyclerView.setAdapter(mAdapter);
     }
-
 }
