@@ -1,15 +1,36 @@
+// this is the main activity
 package com.example.notificationlistener3;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.notificationlistener3.R;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+    ImageView settingButton;
+    Button startFocusModeButton;
+    SharedPreferences mSharedPreferences;
+    PackageManager manager;
+    List<ApplicationInfo> applications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +43,51 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "listening", Toast.LENGTH_SHORT);
             toast.show();
         }
+
+        settingButton = findViewById( R.id.buttonSetting );
+        startFocusModeButton = findViewById( R.id.buttonStartFocusMode );
+
+        mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        boolean is_blocking = false;
+        editor.putBoolean(Util_String.IS_BLOCKING, is_blocking);
+        editor.apply();
+        Log.i("MainActivity", "edit shared preference is_blocking, not blocking notification");
+
+        settingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("MainActivity", "setting button clicked");
+                Intent intent = new Intent( MainActivity.this, SettingMainActivity.class);
+                startActivity( intent );
+            }
+        });
+
+        startFocusModeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("MainActivity", "startFocusMode button clicked");
+                Intent intent = new Intent( MainActivity.this, FocusModeActivity.class );
+                startActivity( intent );
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        String appsNotBlocking = mSharedPreferences.getString(Util_String.APPS_RECEIVing_NOTIFICATION, "");
+        HashSet<String> appsNotBlocked = new HashSet<>(Arrays.asList(appsNotBlocking.split(";")));
+        appsNotBlocked.add("com.android.calendar");
+        appsNotBlocked.add("come.google.android.calendar");
+        String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(Util_String.APPS_RECEIVing_NOTIFICATION, AppsNotBlocking);
+        editor.apply();
+        Log.i("MainActivity", "edit shared preference apps_receiving_notification, receive calender notification by default");
+
     }
 
 
@@ -42,4 +108,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }
