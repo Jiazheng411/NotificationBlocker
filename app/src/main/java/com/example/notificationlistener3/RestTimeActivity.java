@@ -2,26 +2,36 @@ package com.example.notificationlistener3;
 
 import android.app.AppComponentFactory;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RestTimeActivity extends AppCompatActivity {
-    Button buttonSetting;
+    ImageView buttonSetting;
     Button buttonStartFocusMode;
+    SharedPreferences mSharedPreferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rest_time_activity);
         Log.i("RestTimeActivity", "oncreate");
-        buttonSetting = findViewById(R.id.buttonSettingRestPage);
+        buttonSetting = findViewById(R.id.buttonSetting);
         buttonStartFocusMode = findViewById(R.id.buttonStartFocusModeRestPage);
+
+        mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        boolean is_blocking = false;
+        editor.putBoolean(Util_String.IS_BLOCKING, is_blocking);
+        editor.apply();
+        Log.i("MainActivity", "edit shared preference is_blocking, not blocking notification");
 
         buttonSetting.setOnClickListener(new View.OnClickListener() {
             @Override

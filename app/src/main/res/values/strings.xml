@@ -5,4 +5,6 @@
     <string name="main_activity_image_desc">Main Activity Background</string>
     <string name="focus_mode_image_desc">Focus Mode Background</string>
     <string name="rest_image_desc">Rest Page Image</string>
+    <string name="notification_receive">Receive Notification From These Apps</string>
+    <string name="app_icon_desc">App Icon</string>
 </resources>
