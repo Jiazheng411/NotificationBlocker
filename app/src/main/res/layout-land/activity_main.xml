@@ -12,7 +12,7 @@
         android:id="@+id/buttonStartFocusMode"
         android:layout_width="280dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="68dp"
         android:background="@drawable/btn_shape"
         android:backgroundTint="@color/blue_shadow"
         android:fontFamily="monospace"
@@ -25,7 +25,7 @@
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.86"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -39,22 +39,23 @@
 
     <ImageView
         android:id="@+id/image_lamp_shadow"
-        android:layout_width="265dp"
-        android:layout_height="315dp"
+        android:layout_width="252dp"
+        android:layout_height="300dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/text_connect"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.769"
+        app:layout_constraintVertical_bias="0.492"
         app:srcCompat="@drawable/lamp_shadow" />
 
     <TextView
         android:id="@+id/text_connect"
-        android:layout_width="280dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="monospace"
         android:lineSpacingExtra="18sp"
         android:text="@string/text_connect"
@@ -63,7 +64,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/buttonStartFocusMode"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.897"
         app:layout_constraintStart_toStartOf="parent" />
 
 
