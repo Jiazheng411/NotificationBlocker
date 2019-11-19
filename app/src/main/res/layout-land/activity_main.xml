@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/text_connect"
-        android:layout_width="320dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:fontFamily="monospace"
@@ -50,8 +50,18 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/buttonStartFocusMode"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintHorizontal_bias="0.86"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:layout_width="315dp"
+        android:layout_height="306dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_connect"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/lamp_shadow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
