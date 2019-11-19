@@ -37,20 +37,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/setting" />
 
-    <ImageView
-        android:id="@+id/image_lamp_shadow"
-        android:layout_width="252dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.129"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.492"
-        app:srcCompat="@drawable/lamp_shadow" />
-
     <TextView
         android:id="@+id/text_connect"
         android:layout_width="320dp"
