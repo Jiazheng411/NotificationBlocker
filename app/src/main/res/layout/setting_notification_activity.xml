@@ -12,6 +12,7 @@
         android:text="@string/notification_receive" />
 
     <SearchView
+        android:id="@+id/notificationSearch"
         android:layout_width="match_parent"
         android:layout_height="38dp" />
 
