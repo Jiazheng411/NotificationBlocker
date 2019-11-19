@@ -29,7 +29,6 @@
         <activity android:name=".SettingMainActivity"></activity>
         <activity android:name=".SettingNotificationActivity"></activity>
 
-        <activity android:name=".SettingMain"></activity>
         <activity android:name=".TimeSettings"></activity>
         <activity android:name=".LampSettings"></activity>
     </application>

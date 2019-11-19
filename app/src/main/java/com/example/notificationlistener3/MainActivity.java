@@ -78,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
-        String appsNotBlocking = mSharedPreferences.getString(Util_String.APPS_RECEIVing_NOTIFICATION, "");
+        String appsNotBlocking = mSharedPreferences.getString(Util_String.APPS_RECEIVING_NOTIFICATION, "");
         HashSet<String> appsNotBlocked = new HashSet<>(Arrays.asList(appsNotBlocking.split(";")));
         appsNotBlocked.add("com.android.calendar");
         appsNotBlocked.add("come.google.android.calendar");
         String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(Util_String.APPS_RECEIVing_NOTIFICATION, AppsNotBlocking);
+        editor.putString(Util_String.APPS_RECEIVING_NOTIFICATION, AppsNotBlocking);
         editor.apply();
         Log.i("MainActivity", "edit shared preference apps_receiving_notification, receive calender notification by default");
 

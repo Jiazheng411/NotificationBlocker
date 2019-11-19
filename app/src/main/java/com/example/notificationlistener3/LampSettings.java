@@ -29,7 +29,7 @@ public class LampSettings extends AppCompatActivity {
         lampback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LampSettings.this,SettingMain.class);
+                Intent intent = new Intent(LampSettings.this,SettingMainActivity.class);
                 startActivity(intent);
             }
         });

@@ -57,7 +57,7 @@ public class SettingNotificationActivity extends AppCompatActivity implements on
     @Override
     public void OnCheckboxClicked(int pos, boolean isChecked){
         String appname = applications.get(pos).packageName;
-        HashSet<String> appsNotBlocking = new HashSet<>(Arrays.asList(mPreferences.getString(Util_String.APPS_RECEIVing_NOTIFICATION, "").split(";")));
+        HashSet<String> appsNotBlocking = new HashSet<>(Arrays.asList(mPreferences.getString(Util_String.APPS_RECEIVING_NOTIFICATION, "").split(";")));
 
         if (isChecked) {
             appsNotBlocking.add(appname);
@@ -65,7 +65,7 @@ public class SettingNotificationActivity extends AppCompatActivity implements on
             appsNotBlocking.remove(appname);
         }
 
-        mPreferences.edit().putString(Util_String.APPS_RECEIVing_NOTIFICATION, TextUtils.join(";", appsNotBlocking)).apply();
+        mPreferences.edit().putString(Util_String.APPS_RECEIVING_NOTIFICATION, TextUtils.join(";", appsNotBlocking)).apply();
 
     }
 }

@@ -34,7 +34,7 @@ public class TimeSettings extends AppCompatActivity{
         timeback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TimeSettings.this, SettingMain.class);
+                Intent intent = new Intent(TimeSettings.this, SettingMainActivity.class);
                 startActivity(intent);
             }
         });

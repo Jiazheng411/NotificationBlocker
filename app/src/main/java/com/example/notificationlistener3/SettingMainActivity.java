@@ -11,13 +11,35 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingMainActivity extends AppCompatActivity {
+    Button lampButton;
+    Button timeButton;
     Button buttonToNotifSetting;
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting_main_activity);
-        Log.i("SettingActivity", "oncreate");
-        buttonToNotifSetting = findViewById(R.id.button);
+        setContentView(R.layout.settings);
+        lampButton = findViewById(R.id.lampSetting);
+        timeButton = findViewById(R.id.timeSettings);
+        buttonToNotifSetting = findViewById(R.id.buttonNotificationSetting);
+
+        lampButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingMainActivity.this, LampSettings.class);
+                startActivity(intent);
+            }
+        });
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingMainActivity.this, TimeSettings.class);
+                startActivity(intent);
+
+                Log.i("SettingActivity", "oncreate");
+            }
+        });
+
         buttonToNotifSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -25,5 +47,6 @@ public class SettingMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 }

@@ -140,7 +140,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ApplicationInfo app = apps.get(position);
-        HashSet<String> notBlocked = new HashSet<>(Arrays.asList(mSharedPreferences.getString(Util_String.APPS_RECEIVing_NOTIFICATION, "").split(";")));
+        HashSet<String> notBlocked = new HashSet<>(Arrays.asList(mSharedPreferences.getString(Util_String.APPS_RECEIVING_NOTIFICATION, "").split(";")));
 
         holder.icon.setImageDrawable(app.loadIcon(packageManager));
         holder.name.setText(app.loadLabel(packageManager));
