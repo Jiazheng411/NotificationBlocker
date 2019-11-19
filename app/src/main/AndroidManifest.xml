@@ -23,10 +23,14 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
         <activity android:name=".FocusModeActivity"></activity>
         <activity android:name=".RestTimeActivity"></activity>
         <activity android:name=".SettingMainActivity"></activity>
         <activity android:name=".SettingNotificationActivity"></activity>
+
+        <activity android:name=".TimeSettings"></activity>
+        <activity android:name=".LampSettings"></activity>
     </application>
 
 </manifest>
