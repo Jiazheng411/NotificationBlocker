@@ -85,11 +85,24 @@ public class MainActivity extends AppCompatActivity {
         String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
         editor.putString(Util_String.APPS_RECEIVING_NOTIFICATION, AppsNotBlocking).apply();
 
-        String lampBrightness = mSharedPreferences.getString(Util_String.LAMP_BRIGHTNESS, null);
-        if (lampBrightness == null) {
-            lampBrightness = "50";
-            editor.putString(Util_String.LAMP_BRIGHTNESS,lampBrightness).apply();
+        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS, null);
+        if (lampRBrightness == null) {
+            lampRBrightness = "50";
+            editor.putString(Util_String.LAMP_R_BRIGHTNESS,lampRBrightness).apply();
         }
+
+        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS, null);
+        if (lampGBrightness == null) {
+            lampGBrightness = "50";
+            editor.putString(Util_String.LAMP_G_BRIGHTNESS,lampRBrightness).apply();
+        }
+
+        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS, null);
+        if (lampBBrightness == null) {
+            lampBBrightness = "50";
+            editor.putString(Util_String.LAMP_B_BRIGHTNESS,lampBBrightness).apply();
+        }
+
 
         String restTime = mSharedPreferences.getString(Util_String.RESTING_TIME,null);
         if (restTime == null){
