@@ -1,13 +1,17 @@
 // this is the main activity
 package com.example.notificationlistener3;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -19,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.notificationlistener3.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -34,13 +39,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if (!isEnabled()) {
-            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "listening", Toast.LENGTH_SHORT);
-            toast.show();
-        }
+            showNormalDialog();
+            }
 
         settingButton = findViewById( R.id.buttonSetting );
         startFocusModeButton = findViewById( R.id.buttonStartFocusMode );
@@ -48,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
         mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         boolean is_blocking = false;
-        editor.putBoolean(Util_String.IS_BLOCKING, is_blocking);
-        editor.apply();
+        editor.putBoolean(Util_String.IS_BLOCKING, is_blocking).apply();
         Log.i("MainActivity", "edit shared preference is_blocking, not blocking notification");
 
         settingButton.setOnClickListener(new View.OnClickListener() {
@@ -125,5 +125,26 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
+
+    private void showNormalDialog(){
+
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(MainActivity.this);
+        normalDialog.setTitle("Notification Manage Permission");
+        normalDialog.setMessage("Please let us manage your notification");
+        normalDialog.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+                    }
+                });
+        normalDialog.show();
+    }
+
+
+
+
 
 }
