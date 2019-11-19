@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/textview"
+        android:textColor="@android:color/background_light"
+        android:textSize="30sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:text="@string/textview2"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp"
+        android:gravity="center"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <SeekBar
+        android:id="@+id/brightnessR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:progress="50"/>
+
+    <TextView
+        android:id="@+id/brightnessRValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/brightnessRValue"
+        android:gravity="center"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <SeekBar
+        android:id="@+id/brightnessG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:progress="50" />
+
+    <TextView
+        android:id="@+id/brightnessGValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/brightnessGValue"
+        android:gravity="center" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <SeekBar
+        android:id="@+id/brightnessB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:progress="50"/>
+
+    <TextView
+        android:id="@+id/brightnessBvalue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/brightnessBvalue"
+        android:gravity="center"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="143dp" />
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="@string/confirm"
+        android:textColor="@android:color/background_light"
+        android:translationX="140dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <Button
+        android:id="@+id/lampBack"
+        android:layout_width="162dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="@string/lampBack"
+        android:textColor="@android:color/background_light"
+        android:translationX="100dp" />
+
+</LinearLayout>

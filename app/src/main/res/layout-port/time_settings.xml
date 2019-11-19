@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/timeSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#009688"
+        android:text="@string/timeSetting"
+        android:textColor="@android:color/background_light"
+        android:textSize="30sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textview3"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp" />
+
+    <SeekBar
+        android:id="@+id/studyTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="90"
+        android:progress="60"/>
+
+    <TextView
+        android:id="@+id/studyTimeValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/studyTimeValue" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="58dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textview5"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp" />
+
+    <SeekBar
+        android:id="@+id/restTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="20"
+        android:progress="15"/>
+
+    <TextView
+        android:id="@+id/resttimeValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/resttimeValue" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="236dp" />
+
+    <Button
+        android:id="@+id/timeBack"
+        android:layout_width="151dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/lampBack"
+        android:textColor="@android:color/background_light"
+        android:translationX="110dp" />
+
+</LinearLayout>
