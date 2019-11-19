@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
     ImageView settingButton;
     Button startFocusModeButton;
     SharedPreferences mSharedPreferences;
-    PackageManager manager;
-    List<ApplicationInfo> applications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,14 +76,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+
         String appsNotBlocking = mSharedPreferences.getString(Util_String.APPS_RECEIVING_NOTIFICATION, "");
         HashSet<String> appsNotBlocked = new HashSet<>(Arrays.asList(appsNotBlocking.split(";")));
         appsNotBlocked.add("com.android.calendar");
         appsNotBlocked.add("come.google.android.calendar");
         String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(Util_String.APPS_RECEIVING_NOTIFICATION, AppsNotBlocking);
-        editor.apply();
+        editor.putString(Util_String.APPS_RECEIVING_NOTIFICATION, AppsNotBlocking).apply();
+
+        String lampBrightness = mSharedPreferences.getString(Util_String.LAMP_BRIGHTNESS, null);
+        if (lampBrightness == null) {
+            lampBrightness = "50";
+            editor.putString(Util_String.LAMP_BRIGHTNESS,lampBrightness).apply();
+        }
+
+        String restTime = mSharedPreferences.getString(Util_String.RESTING_TIME,null);
+        if (restTime == null){
+            restTime = "15";
+            editor.putString(Util_String.RESTING_TIME,restTime).apply();
+        }
+
+        String focusTime = mSharedPreferences.getString(Util_String.FOCUS_TIME, null);
+        if (focusTime == null){
+            focusTime = "60";
+            editor.putString(Util_String.FOCUS_TIME,focusTime).apply();
+        }
+
         Log.i("MainActivity", "edit shared preference apps_receiving_notification, receive calender notification by default");
 
     }

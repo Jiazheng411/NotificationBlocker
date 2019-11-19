@@ -27,10 +27,16 @@
         <activity android:name=".FocusModeActivity"></activity>
         <activity android:name=".RestTimeActivity"></activity>
         <activity android:name=".SettingMainActivity"></activity>
-        <activity android:name=".SettingNotificationActivity"></activity>
 
-        <activity android:name=".TimeSettings"></activity>
-        <activity android:name=".LampSettings"></activity>
+        <activity android:name=".SettingNotificationActivity"
+            android:parentActivityName=".SettingMainActivity"></activity>
+
+        <activity android:name=".TimeSettings"
+            android:parentActivityName=".SettingMainActivity" >
+        </activity>
+
+        <activity android:name=".LampSettings"
+            android:parentActivityName=".SettingMainActivity"></activity>
     </application>
 
 </manifest>
