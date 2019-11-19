@@ -7,4 +7,22 @@
     <string name="rest_image_desc">Rest Page Image</string>
     <string name="notification_receive">Receive Notification From These Apps</string>
     <string name="app_icon_desc">App Icon</string>
+    <string name="textview">Lamp Settings</string>
+    <string name="textview2">Brightness</string>
+    <string name="brightnessRValue">R value: 50</string>
+    <string name="brightnessGValue">G value: 50</string>
+    <string name="brightnessBvalue">B value: 50</string>
+    <string name="lampBack">Back to main page</string>
+    <string name="confirm">Confirm</string>
+    <string name="timeSetting">Time Settings</string>
+    <string name="textview3">Study Time (min)</string>
+    <string name="studyTimeValue">60</string>
+    <string name="textview5">Rest Time (min)</string>
+    <string name="resttimeValue">15</string>
+    <string name="timeBack">Back To main page</string>
+    <string name="settingss">Settings</string>
+    <string name="lampSetting">Lamp Settings</string>
+    <string name="timeSettings">Time Settings</string>
+    <string name="onNotificationSetting">Notification Settings</string>
+
 </resources>

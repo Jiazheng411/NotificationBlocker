@@ -4,18 +4,25 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/timeSetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#009688"
-        android:text="Time Settings"
-        android:textColor="@android:color/background_light" />
+        android:text="@string/timeSetting"
+        android:textColor="@android:color/background_light"
+        android:textSize="30sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Study Time" />
+        android:text="@string/textview3"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp" />
 
     <SeekBar
         android:id="@+id/studyTime"
@@ -28,7 +35,7 @@
         android:id="@+id/studyTimeValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="60" />
+        android:text="@string/studyTimeValue" />
 
     <Space
         android:layout_width="match_parent"
@@ -38,7 +45,9 @@
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Rest Time" />
+        android:text="@string/textview5"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp" />
 
     <SeekBar
         android:id="@+id/restTime"
@@ -51,15 +60,20 @@
         android:id="@+id/resttimeValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="15" />
+        android:text="@string/resttimeValue" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="186dp" />
+        android:layout_height="236dp" />
 
     <Button
         android:id="@+id/timeBack"
-        android:layout_width="match_parent"
+        android:layout_width="151dp"
         android:layout_height="wrap_content"
-        android:text="back to main page" />
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/lampBack"
+        android:textColor="@android:color/background_light"
+        android:translationX="110dp" />
+
 </LinearLayout>
