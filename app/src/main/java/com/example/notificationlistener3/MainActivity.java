@@ -3,6 +3,7 @@ package com.example.notificationlistener3;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     ImageView settingButton;
     Button startFocusModeButton;
     SharedPreferences mSharedPreferences;
+    BluetoothSerial bluetooth;
+    BluetoothAdapter bluetoothAdapter;
+    private static final int REQUEST_ENABLE_BT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +45,16 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "listening", Toast.LENGTH_SHORT);
             toast.show();
         }
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+        bluetooth = new BluetoothSerial(MainActivity.this);
+        settingButton = findViewById(R.id.buttonSetting);
+        startFocusModeButton = findViewById(R.id.buttonStartFocusMode);
 
-        settingButton = findViewById( R.id.buttonSetting );
-        startFocusModeButton = findViewById( R.id.buttonStartFocusMode );
-
-        mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         boolean is_blocking = false;
         editor.putBoolean(Util_String.IS_BLOCKING, is_blocking);
@@ -56,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i("MainActivity", "setting button clicked");
-                Intent intent = new Intent( MainActivity.this, SettingMainActivity.class);
-                startActivity( intent );
+                Intent intent = new Intent(MainActivity.this, SettingMainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -65,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i("MainActivity", "startFocusMode button clicked");
-                Intent intent = new Intent( MainActivity.this, FocusModeActivity.class );
-                startActivity( intent );
+                Intent intent = new Intent(MainActivity.this, FocusModeActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -75,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         String appsNotBlocking = mSharedPreferences.getString(Util_String.APPS_RECEIVING_NOTIFICATION, "");
@@ -88,25 +97,24 @@ public class MainActivity extends AppCompatActivity {
         String lampBrightness = mSharedPreferences.getString(Util_String.LAMP_BRIGHTNESS, null);
         if (lampBrightness == null) {
             lampBrightness = "50";
-            editor.putString(Util_String.LAMP_BRIGHTNESS,lampBrightness).apply();
+            editor.putString(Util_String.LAMP_BRIGHTNESS, lampBrightness).apply();
         }
 
-        String restTime = mSharedPreferences.getString(Util_String.RESTING_TIME,null);
-        if (restTime == null){
+        String restTime = mSharedPreferences.getString(Util_String.RESTING_TIME, null);
+        if (restTime == null) {
             restTime = "15";
-            editor.putString(Util_String.RESTING_TIME,restTime).apply();
+            editor.putString(Util_String.RESTING_TIME, restTime).apply();
         }
 
         String focusTime = mSharedPreferences.getString(Util_String.FOCUS_TIME, null);
-        if (focusTime == null){
+        if (focusTime == null) {
             focusTime = "60";
-            editor.putString(Util_String.FOCUS_TIME,focusTime).apply();
+            editor.putString(Util_String.FOCUS_TIME, focusTime).apply();
         }
 
         Log.i("MainActivity", "edit shared preference apps_receiving_notification, receive calender notification by default");
 
     }
-
 
     // notification management permission checking
     private boolean isEnabled() {
@@ -126,4 +134,16 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bluetooth.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        bluetooth.onPause();
+        bluetooth.close();
+    }
 }
