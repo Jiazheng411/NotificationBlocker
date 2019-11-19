@@ -1,10 +1,8 @@
 package com.example.notificationlistener3;
 
-import android.app.AppComponentFactory;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +19,7 @@ public class RestTimeActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.rest_time_activity);
+        setContentView(R.layout.rest_time_activity_land);
         Log.i("RestTimeActivity", "oncreate");
         buttonSetting = findViewById(R.id.buttonSetting);
         buttonStartFocusMode = findViewById(R.id.buttonStartFocusModeRestPage);

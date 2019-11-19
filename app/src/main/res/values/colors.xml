@@ -6,4 +6,6 @@
     <color name="blue_main">#98CFFF</color>
     <color name="yellow_focus">#FFDB79</color>
     <color name="green_free">#90D373</color>
+    <color name="blue_shadow">#648EB9</color>
+    <color name="green_Shadow">#609548</color>
 </resources>
