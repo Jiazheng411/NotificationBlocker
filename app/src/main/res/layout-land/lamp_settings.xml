@@ -6,15 +6,15 @@
     <TextView
         android:id="@+id/textview"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:text="@string/textview"
         android:textColor="@android:color/background_light"
-        android:textSize="30sp" />
+        android:textSize="24sp" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="35dp" />
+        android:layout_height="20dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -46,7 +46,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="10dp" />
 
     <SeekBar
         android:id="@+id/brightnessG"
@@ -64,7 +64,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="10dp" />
 
     <SeekBar
         android:id="@+id/brightnessB"
@@ -82,28 +82,28 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="143dp" />
+        android:layout_height="10dp" />
 
     <Button
         android:id="@+id/confirm"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="33dp"
+        android:layout_gravity="center"
         android:background="@color/colorPrimary"
         android:text="@string/confirm"
-        android:textColor="@android:color/background_light"
-        android:translationX="140dp" />
+        android:textColor="@android:color/background_light" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="10dp" />
 
     <Button
         android:id="@+id/lampBack"
         android:layout_width="162dp"
-        android:layout_height="wrap_content"
+        android:layout_height="33dp"
+        android:layout_gravity="center"
         android:background="@color/colorPrimary"
         android:text="@string/lampBack"
-        android:textColor="@android:color/background_light"
-        android:translationX="100dp" />
+        android:textColor="@android:color/background_light" />
 
 </LinearLayout>

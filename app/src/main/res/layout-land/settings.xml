@@ -10,11 +10,11 @@
         android:background="#009688"
         android:text="@string/settingss"
         android:textColor="@android:color/background_light"
-        android:textSize="30sp" />
+        android:textSize="24sp" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="83dp" />
+        android:layout_height="35dp" />
 
     <Button
         android:id="@+id/lampSetting"
@@ -23,11 +23,11 @@
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/textview"
         android:textColor="@android:color/background_light"
-        android:translationX="115dp" />
+        android:layout_gravity="center"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="88dp" />
+        android:layout_height="49dp" />
 
     <Button
         android:id="@+id/timeSettings"
@@ -36,11 +36,11 @@
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/timeSettings"
         android:textColor="@android:color/background_light"
-        android:translationX="120dp" />
+        android:layout_gravity="center" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="88dp" />
+        android:layout_height="49dp" />
 
     <Button
         android:id="@+id/buttonNotificationSetting"
@@ -49,5 +49,5 @@
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/onNotificationSetting"
         android:textColor="@android:color/background_light"
-        android:translationX="95dp" />
+        android:layout_gravity="center" />
 </LinearLayout>

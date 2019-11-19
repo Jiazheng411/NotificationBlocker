@@ -5,6 +5,8 @@ class Util_String {
     static final String APPS_RECEIVING_NOTIFICATION = "apps_receiving_notification";
     static final String RESTING_TIME = "resting time";
     static final String FOCUS_TIME = "focus time";
-    static final String LAMP_BRIGHTNESS = "lamp brightness";
+    static final String LAMP_R_BRIGHTNESS = "lamp r brightness";
+    static final String LAMP_G_BRIGHTNESS = "lamp g brightness";
+    static final String LAMP_B_BRIGHTNESS = "lamp b brightness";
 
 }

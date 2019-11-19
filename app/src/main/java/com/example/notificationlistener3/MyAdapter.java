@@ -60,7 +60,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -155,5 +154,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     public ApplicationInfo getItem(int position) {
         return apps.get(position);
+    }
+
+    public void setApps(List<ApplicationInfo> apps) {
+        this.apps = apps;
+        notifyDataSetChanged();
     }
 }
