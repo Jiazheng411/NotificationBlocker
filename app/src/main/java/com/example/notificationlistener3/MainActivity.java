@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
     ImageView settingButton;
     Button startFocusModeButton;
     SharedPreferences mSharedPreferences;
-    BluetoothSerial bluetooth;
-    BluetoothAdapter bluetoothAdapter;
     private static final int REQUEST_ENABLE_BT = 1;
 
     @Override
@@ -45,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
             showNormalDialog();
             startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
         }
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
-        bluetooth = new BluetoothSerial(MainActivity.this);
+        // start the bluetooth Service here
+        Intent bluetoothService = new Intent(MainActivity.this, BluetoothSerialService.class);
+        startService(bluetoothService);
+
         settingButton = findViewById(R.id.buttonSetting);
         startFocusModeButton = findViewById(R.id.buttonStartFocusMode);
 
@@ -77,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -147,19 +147,6 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bluetooth.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        bluetooth.onPause();
-        bluetooth.close();
-    }
-
     private void showNormalDialog(){
 
         final AlertDialog.Builder normalDialog =
@@ -174,5 +161,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         normalDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent stopBluetoothService = new Intent(MainActivity.this, BluetoothSerialService.class);
+        stopService(stopBluetoothService);
     }
 }

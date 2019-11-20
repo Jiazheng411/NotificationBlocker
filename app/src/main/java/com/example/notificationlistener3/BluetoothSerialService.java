@@ -1,12 +1,7 @@
 package com.example.notificationlistener3;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Method;
-import java.util.UUID;
-
 import android.annotation.SuppressLint;
+import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -15,28 +10,66 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.os.IBinder;
 import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-public class BluetoothSerial {
-    private static String tag = "IISP Bluetooth";
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.Method;
+import java.util.UUID;
+
+public class BluetoothSerialService extends Service {
+    private static String tag = "IISP BLService";
     public static final String address = "B4:E6:2D:C0:B8:4B";
     public static String BLUETOOTH_FAILED = "bluetooth-connection-failed";
     public static String BLUETOOTH_CONNECTED = "bluetooth-connection-started";
     public static String BLUETOOTH_DISCONNECTED = "bluetooth-connection-lost";
     AsyncTask<Void, Void, BluetoothDevice> connectionTask;
+    BluetoothSerialService.SerialReader serialReader;
+    BluetoothAdapter bluetoothAdapter;
     BluetoothDevice bluetoothDevice;
     OutputStream serialOutputStream;
     InputStream serialInputStream;
     BluetoothSocket serialSocket;
-    SerialReader serialReader;
     boolean connected = false;
-    Context context;
     int[] last_value = new int[3];
+    private MsgReceiver msgReceiver;
 
-    public BluetoothSerial(Context context) {
-        this.context = context;
+    public BluetoothSerialService() {
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.i(tag, "started service BluetoothService");
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivity(intent);
+        }
+        //listen for bluetooth disconnect
+        IntentFilter disconnectIntent = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        BluetoothSerialService.this.registerReceiver(bluetoothReceiver, disconnectIntent);
+        //reestablishes a connection is one doesn't exist
+        if (!connected) {
+            connect();
+            Log.i(tag, "Trying to connect");
+        } else {
+            Intent intent = new Intent(BLUETOOTH_CONNECTED);
+            LocalBroadcastManager.getInstance(BluetoothSerialService.this).sendBroadcast(intent);
+        }
+        msgReceiver = new MsgReceiver();
+        IntentFilter messager = new IntentFilter("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
+        registerReceiver(msgReceiver, messager);
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public int read(int bufferSize, byte[] buffer) {
@@ -46,14 +79,23 @@ public class BluetoothSerial {
                 sb.append((char) buffer[i]);
             }
             String message = sb.toString();
+            if (message.equals("hN")) {
+                setRGB(last_value);
+            } else if (message.equals("hP0")) {
+                // disconnected
+                Intent exitFocusMode = new Intent(BluetoothSerialService.this, MainActivity.class);
+                startActivity(exitFocusMode);
+            } else if (message.equals("hP1")) {
+                // connected
+                Intent enterFocusMode = new Intent(BluetoothSerialService.this, FocusModeActivity.class);
+                startActivity(enterFocusMode);
+            }
+            if (message.equals("start\n")) {
+                Log.i(tag, "start the app");
+                Intent start = new Intent(BluetoothSerialService.this, MainActivity.class);
+                startActivity(start);
+            }
             if (buffer[bufferSize - 1] == 10) {
-                if (message.equals("hN")) {
-                    setRGB(last_value);
-                } else if (message.equals("hP0")){
-                    // disconnected
-                } else if (message.equals("hP1")){
-                    // connected
-                }
                 Log.i(tag, "received message:" + message);
                 return bufferSize;
             }
@@ -67,7 +109,7 @@ public class BluetoothSerial {
         throw new RuntimeException("Connection lost, reconnecting now.");
     }
 
-    public void setRGB(int[] rgb){
+    public void setRGB(int[] rgb) {
         setRGB(rgb[0], rgb[1], rgb[2]);
     }
 
@@ -107,23 +149,6 @@ public class BluetoothSerial {
             } catch (IOException e) {
                 Log.i(tag, "Failed to send message");
             }
-        }
-    }
-
-    public void onPause() {
-        context.unregisterReceiver(bluetoothReceiver);
-    }
-
-    public void onResume() {
-        //listen for bluetooth disconnect
-        IntentFilter disconnectIntent = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-        context.registerReceiver(bluetoothReceiver, disconnectIntent);
-        //reestablishes a connection is one doesn't exist
-        if (!connected) {
-            connect();
-        } else {
-            Intent intent = new Intent(BLUETOOTH_CONNECTED);
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
     }
 
@@ -188,7 +213,7 @@ public class BluetoothSerial {
                 }
                 Log.i(tag, "Stopping connection attempts");
                 Intent intent = new Intent(BLUETOOTH_FAILED);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(BluetoothSerialService.this).sendBroadcast(intent);
                 return null;
             }
 
@@ -197,11 +222,11 @@ public class BluetoothSerial {
                 super.onPostExecute(result);
                 bluetoothDevice = result;
                 //start thread responsible for reading from inputstream
-                serialReader = new SerialReader();
+                serialReader = new BluetoothSerialService.SerialReader();
                 serialReader.start();
                 //send connection message
                 Intent intent = new Intent(BLUETOOTH_CONNECTED);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(BluetoothSerialService.this).sendBroadcast(intent);
             }
         };
         connectionTask.execute();
@@ -311,4 +336,17 @@ public class BluetoothSerial {
             }
         }
     };
+
+    public class MsgReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // get the message from the intent
+            int r = intent.getIntExtra("R", 255);
+            int g = intent.getIntExtra("G", 255);
+            int b = intent.getIntExtra("B", 255);
+            setRGB(r,g,b);
+        }
+    }
 }
+
+
