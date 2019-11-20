@@ -20,6 +20,10 @@ public class TimeSettings extends AppCompatActivity{
     TextView StudyTimevalue;
     TextView RestTimevalue;
     Button timeback;
+    String SetStudyTime;
+    String SetRestTime;
+    SharedPreferences tSaredPreferences;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class TimeSettings extends AppCompatActivity{
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 StudyTimevalue.setText(String.valueOf(i));
+                SetStudyTime = String.valueOf(i);
             }
 
             @Override
@@ -58,6 +63,7 @@ public class TimeSettings extends AppCompatActivity{
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 RestTimevalue.setText(String.valueOf(i));
+                SetRestTime = String.valueOf(i);
             }
 
             @Override
@@ -70,5 +76,11 @@ public class TimeSettings extends AppCompatActivity{
 
             }
         });
+
+        tSaredPreferences = getSharedPreferences("time settings",MODE_PRIVATE);
+        SharedPreferences.Editor editor = tSaredPreferences.edit();
+        editor.putString("RESTING_TIME",SetRestTime).apply();
+        editor.putString("FOUCUS_TIME",SetStudyTime).apply();
+
     }
 }

@@ -19,7 +19,7 @@ public class RestTimeActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.rest_time_activity_land);
+        setContentView(R.layout.rest_time_activity);
         Log.i("RestTimeActivity", "oncreate");
         buttonSetting = findViewById(R.id.buttonSetting);
         buttonStartFocusMode = findViewById(R.id.buttonStartFocusModeRestPage);

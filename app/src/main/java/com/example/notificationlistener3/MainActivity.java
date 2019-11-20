@@ -1,28 +1,23 @@
 // this is the main activity
 package com.example.notificationlistener3;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.example.notificationlistener3.R;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,13 +29,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if (!isEnabled()) {
-            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "listening", Toast.LENGTH_SHORT);
-            toast.show();
-        }
+            showNormalDialog();
+            }
 
         settingButton = findViewById( R.id.buttonSetting );
         startFocusModeButton = findViewById( R.id.buttonStartFocusMode );
@@ -48,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
         mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         boolean is_blocking = false;
-        editor.putBoolean(Util_String.IS_BLOCKING, is_blocking);
-        editor.apply();
+        editor.putBoolean(Util_String.IS_BLOCKING, is_blocking).apply();
         Log.i("MainActivity", "edit shared preference is_blocking, not blocking notification");
 
         settingButton.setOnClickListener(new View.OnClickListener() {
@@ -85,11 +75,24 @@ public class MainActivity extends AppCompatActivity {
         String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
         editor.putString(Util_String.APPS_RECEIVING_NOTIFICATION, AppsNotBlocking).apply();
 
-        String lampBrightness = mSharedPreferences.getString(Util_String.LAMP_BRIGHTNESS, null);
-        if (lampBrightness == null) {
-            lampBrightness = "50";
-            editor.putString(Util_String.LAMP_BRIGHTNESS,lampBrightness).apply();
+        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS, null);
+        if (lampRBrightness == null) {
+            lampRBrightness = "50";
+            editor.putString(Util_String.LAMP_R_BRIGHTNESS,lampRBrightness).apply();
         }
+
+        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS, null);
+        if (lampGBrightness == null) {
+            lampGBrightness = "50";
+            editor.putString(Util_String.LAMP_G_BRIGHTNESS,lampRBrightness).apply();
+        }
+
+        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS, null);
+        if (lampBBrightness == null) {
+            lampBBrightness = "50";
+            editor.putString(Util_String.LAMP_B_BRIGHTNESS,lampBBrightness).apply();
+        }
+
 
         String restTime = mSharedPreferences.getString(Util_String.RESTING_TIME,null);
         if (restTime == null){
@@ -125,5 +128,26 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
+
+    private void showNormalDialog(){
+
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(MainActivity.this);
+        normalDialog.setTitle("Notification Manage Permission");
+        normalDialog.setMessage("Please let us manage your notification");
+        normalDialog.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+                    }
+                });
+        normalDialog.show();
+    }
+
+
+
+
 
 }

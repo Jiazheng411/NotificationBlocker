@@ -8,12 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="23sp"
-        android:background="@color/blue_main"
+        android:background="@color/colorPrimary"
         android:text="@string/notification_receive" />
 
     <SearchView
+        android:id="@+id/notificationSearch"
         android:layout_width="match_parent"
-        android:layout_height="38dp" />
+        android:layout_height="38dp"
+        android:iconifiedByDefault="false"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/appRecyclerView"
