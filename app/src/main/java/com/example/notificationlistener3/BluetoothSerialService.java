@@ -79,13 +79,13 @@ public class BluetoothSerialService extends Service {
                 sb.append((char) buffer[i]);
             }
             String message = sb.toString();
-            if (message.equals("hN")) {
+            if (message.equals("hN\n")) {
                 setRGB(last_value);
-            } else if (message.equals("hP0")) {
+            } else if (message.equals("hP0\n")) {
                 // disconnected
                 Intent exitFocusMode = new Intent(BluetoothSerialService.this, MainActivity.class);
                 startActivity(exitFocusMode);
-            } else if (message.equals("hP1")) {
+            } else if (message.equals("hP1\n")) {
                 // connected
                 Intent enterFocusMode = new Intent(BluetoothSerialService.this, FocusModeActivity.class);
                 startActivity(enterFocusMode);
