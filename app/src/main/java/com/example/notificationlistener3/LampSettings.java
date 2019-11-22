@@ -53,6 +53,12 @@ public class LampSettings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //sent value;
+                Intent messager = new Intent();
+                messager.setAction("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
+                messager.putExtra("R",Integer.valueOf(SetRBright));
+                messager.putExtra("G", Integer.valueOf(SetGBright));
+                messager.putExtra("B", Integer.valueOf(SetBBright));
+                sendBroadcast(messager);
             }
         });
         brightnessR.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
