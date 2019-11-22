@@ -4,6 +4,7 @@ package com.example.notificationlistener3;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
+import android.widget.Toast;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView settingButton;
     Button startFocusModeButton;
     SharedPreferences mSharedPreferences;
+    private static final int REQUEST_ENABLE_BT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +33,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (!isEnabled()) {
             showNormalDialog();
-            }
+            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+        }
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+        // start the bluetooth Service here
+        Intent bluetoothService = new Intent(MainActivity.this, BluetoothSerialService.class);
+        startService(bluetoothService);
 
-        settingButton = findViewById( R.id.buttonSetting );
-        startFocusModeButton = findViewById( R.id.buttonStartFocusMode );
+        settingButton = findViewById(R.id.buttonSetting);
+        startFocusModeButton = findViewById(R.id.buttonStartFocusMode);
 
-        mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         boolean is_blocking = false;
         editor.putBoolean(Util_String.IS_BLOCKING, is_blocking).apply();
@@ -46,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i("MainActivity", "setting button clicked");
-                Intent intent = new Intent( MainActivity.this, SettingMainActivity.class);
-                startActivity( intent );
+                Intent intent = new Intent(MainActivity.this, SettingMainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -55,17 +66,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i("MainActivity", "startFocusMode button clicked");
-                Intent intent = new Intent( MainActivity.this, FocusModeActivity.class );
-                startActivity( intent );
+                Intent intent = new Intent(MainActivity.this, FocusModeActivity.class);
+                startActivity(intent);
             }
         });
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         String appsNotBlocking = mSharedPreferences.getString(Util_String.APPS_RECEIVING_NOTIFICATION, "");
@@ -74,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
         appsNotBlocked.add("come.google.android.calendar");
         String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
         editor.putString(Util_String.APPS_RECEIVING_NOTIFICATION, AppsNotBlocking).apply();
+
+
+        String restTime = mSharedPreferences.getString(Util_String.RESTING_TIME, null);
+        if (restTime == null) {
+            restTime = "15";
+            editor.putString(Util_String.RESTING_TIME,restTime).apply();
+        }
 
         String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS, null);
         if (lampRBrightness == null) {
@@ -94,22 +111,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        String restTime = mSharedPreferences.getString(Util_String.RESTING_TIME,null);
-        if (restTime == null){
-            restTime = "15";
-            editor.putString(Util_String.RESTING_TIME,restTime).apply();
-        }
-
         String focusTime = mSharedPreferences.getString(Util_String.FOCUS_TIME, null);
-        if (focusTime == null){
+        if (focusTime == null) {
             focusTime = "60";
-            editor.putString(Util_String.FOCUS_TIME,focusTime).apply();
+            editor.putString(Util_String.FOCUS_TIME, focusTime).apply();
         }
 
         Log.i("MainActivity", "edit shared preference apps_receiving_notification, receive calender notification by default");
 
     }
-
 
     // notification management permission checking
     private boolean isEnabled() {
@@ -129,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-
     private void showNormalDialog(){
 
         final AlertDialog.Builder normalDialog =
@@ -146,8 +155,10 @@ public class MainActivity extends AppCompatActivity {
         normalDialog.show();
     }
 
-
-
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent stopBluetoothService = new Intent(MainActivity.this, BluetoothSerialService.class);
+        stopService(stopBluetoothService);
+    }
 }
