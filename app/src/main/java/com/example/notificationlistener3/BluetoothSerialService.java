@@ -24,8 +24,8 @@ import java.util.UUID;
 
 public class BluetoothSerialService extends Service {
     private static String tag = "IISP BLService";
-//    public static final String address = "B4:E6:2D:C0:B8:4B";
-    public static final String address = "B4:E6:2D:D3:63:87";
+    public static final String address = "B4:E6:2D:C0:B8:4B";
+    //    public static final String address = "B4:E6:2D:D3:63:87";
     public static String BLUETOOTH_FAILED = "bluetooth-connection-failed";
     public static String BLUETOOTH_CONNECTED = "bluetooth-connection-started";
     public static String BLUETOOTH_DISCONNECTED = "bluetooth-connection-lost";
@@ -94,11 +94,13 @@ public class BluetoothSerialService extends Service {
             } else if (message.equals("hP0\n")) {
                 // disconnected
                 Intent exitFocusMode = new Intent(BluetoothSerialService.this, MainActivity.class);
+                exitFocusMode.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(exitFocusMode);
             } else if (message.equals("hP1\n")) {
                 // connected
                 setRGB(last_value);
                 Intent enterFocusMode = new Intent(BluetoothSerialService.this, FocusModeActivity.class);
+                enterFocusMode.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(enterFocusMode);
             }
             if (buffer[bufferSize - 1] == 10) {
