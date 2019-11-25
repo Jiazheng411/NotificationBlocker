@@ -21,6 +21,8 @@ public class TimerActivity extends AppCompatActivity {
         final FrameLayout root = findViewById(R.id.TimerActivity);
         setContentView(R.layout.activity_timer);
 
+        DynamicBackground.initialize();
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable(){
             @Override
