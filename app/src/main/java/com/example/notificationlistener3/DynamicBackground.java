@@ -113,13 +113,13 @@ public class DynamicBackground extends GradientDrawable{
     }
 
     // Debug use only
-    public static DynamicBackground getBackground(int time){
-        int hour = time / 3600000;
+    public static DynamicBackground getBackground(long time){
+        long hour = time / 3600000;
         float thour = time / 3600000.0f;
         int colors[] = new int[2];
 
-        colors[0] = (int)(argbEvaluator.evaluate(thour - hour, skyP[(hour + 8) % 24], skyP[(hour + 9) % 24]));
-        colors[1] = (int)(argbEvaluator.evaluate(thour - hour, skyN[(hour + 8) % 24], skyN[(hour + 9) % 24]));
+        colors[0] = (int)(argbEvaluator.evaluate(thour - hour, skyP[(int)((hour + 8) % 24)], skyP[(int)((hour + 9) % 24)]));
+        colors[1] = (int)(argbEvaluator.evaluate(thour - hour, skyN[(int)((hour + 8) % 24)], skyN[(int)((hour + 9) % 24)]));
 
         // some function
         return new DynamicBackground(colors);
