@@ -24,8 +24,8 @@ import java.util.UUID;
 
 public class BluetoothSerialService extends Service {
     private static String tag = "IISP BLService";
-    public static final String address = "B4:E6:2D:C0:B8:4B";
-    //    public static final String address = "B4:E6:2D:D3:63:87";
+//    public static final String address = "B4:E6:2D:C0:B8:4B";
+    public static final String address = "B4:E6:2D:D3:63:87";
     public static String BLUETOOTH_FAILED = "bluetooth-connection-failed";
     public static String BLUETOOTH_CONNECTED = "bluetooth-connection-started";
     public static String BLUETOOTH_DISCONNECTED = "bluetooth-connection-lost";
@@ -146,6 +146,7 @@ public class BluetoothSerialService extends Service {
         }
         String message = "HR" + rs + "G" + gs + "B" + bs + "S" + ss;
         this.write(message);
+        Log.i(tag, "Sent message:"+message);
     }
 
     public void write(String message) {
