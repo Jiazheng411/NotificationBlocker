@@ -3,14 +3,21 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/timeSetting"
+    <androidx.appcompat.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#009688"
-        android:text="@string/timeSetting"
-        android:textColor="@android:color/background_light"
-        android:textSize="30sp" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time Settings"
+            android:textSize="20sp"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <Space
         android:layout_width="match_parent"
@@ -67,12 +74,12 @@
         android:layout_height="236dp" />
 
     <Button
-        android:id="@+id/timeBack"
+        android:id="@+id/timeDefault"
         android:layout_width="151dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:text="@string/lampBack"
+        android:text="Default value"
         android:textColor="@android:color/background_light"
         android:translationX="110dp" />
 
