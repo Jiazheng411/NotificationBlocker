@@ -2,6 +2,8 @@ package com.example.notificationlistener3;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.content.Intent;
 import android.content.Intent;
@@ -53,9 +55,14 @@ public class LampSettings extends AppCompatActivity {
         brightnessRValue.setText("R value: " + SetRBright);
         brightnessGValue.setText("B value: " + SetGBright);
         brightnesBValue.setText("G value: " + SetBBright);
-        Log.i("sharedR",SetRBright);
+        /*Log.i("sharedR",SetRBright);
         Log.i("sharedG",SetGBright);
-        Log.i("sharedB",SetRBright);
+        Log.i("sharedB",SetRBright);*/
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         /*lampback.setOnClickListener(new View.OnClickListener() {
             @Override

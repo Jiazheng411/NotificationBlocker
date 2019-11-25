@@ -2,6 +2,8 @@ package com.example.notificationlistener3;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,6 +42,10 @@ public class TimeSettings extends AppCompatActivity{
         StudyTimevalue.setText(SetStudyTime);
         RestTimevalue.setText(SetRestTime);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         timedefault.setOnClickListener(new View.OnClickListener() {
             @Override
