@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
@@ -24,11 +25,13 @@ import java.util.UUID;
 public class BluetoothSerialService extends Service {
     private static String tag = "IISP BLService";
     public static final String address = "B4:E6:2D:C0:B8:4B";
+//    public static final String address = "B4:E6:2D:D3:63:87";
     public static String BLUETOOTH_FAILED = "bluetooth-connection-failed";
     public static String BLUETOOTH_CONNECTED = "bluetooth-connection-started";
     public static String BLUETOOTH_DISCONNECTED = "bluetooth-connection-lost";
     AsyncTask<Void, Void, BluetoothDevice> connectionTask;
     BluetoothSerialService.SerialReader serialReader;
+    SharedPreferences mSharedPreferences;
     BluetoothAdapter bluetoothAdapter;
     BluetoothDevice bluetoothDevice;
     OutputStream serialOutputStream;
@@ -64,6 +67,13 @@ public class BluetoothSerialService extends Service {
         msgReceiver = new MsgReceiver();
         IntentFilter messager = new IntentFilter("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
         registerReceiver(msgReceiver, messager);
+        mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
+        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS, null);
+        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS, null);
+        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS, null);
+        last_value[0] = (lampRBrightness != null) ? Integer.parseInt(lampRBrightness) : 50;
+        last_value[1] = (lampGBrightness != null) ? Integer.parseInt(lampGBrightness) : 50;
+        last_value[2] = (lampBBrightness != null) ? Integer.parseInt(lampBBrightness) : 50;
     }
 
     @Override
@@ -79,21 +89,17 @@ public class BluetoothSerialService extends Service {
                 sb.append((char) buffer[i]);
             }
             String message = sb.toString();
-            if (message.equals("hN")) {
+            if (message.equals("hN\n")) {
                 setRGB(last_value);
-            } else if (message.equals("hP0")) {
+            } else if (message.equals("hP0\n")) {
                 // disconnected
                 Intent exitFocusMode = new Intent(BluetoothSerialService.this, MainActivity.class);
                 startActivity(exitFocusMode);
-            } else if (message.equals("hP1")) {
+            } else if (message.equals("hP1\n")) {
                 // connected
+                setRGB(last_value);
                 Intent enterFocusMode = new Intent(BluetoothSerialService.this, FocusModeActivity.class);
                 startActivity(enterFocusMode);
-            }
-            if (message.equals("start\n")) {
-                Log.i(tag, "start the app");
-                Intent start = new Intent(BluetoothSerialService.this, MainActivity.class);
-                startActivity(start);
             }
             if (buffer[bufferSize - 1] == 10) {
                 Log.i(tag, "received message:" + message);
@@ -314,6 +320,8 @@ public class BluetoothSerialService extends Service {
             Log.e(tag, "Failed closing socket");
         }
         Log.i(tag, "Released bluetooth connections");
+        this.unregisterReceiver(bluetoothReceiver);
+        this.unregisterReceiver(msgReceiver);
     }
 
     /**
@@ -344,7 +352,7 @@ public class BluetoothSerialService extends Service {
             int r = intent.getIntExtra("R", 255);
             int g = intent.getIntExtra("G", 255);
             int b = intent.getIntExtra("B", 255);
-            setRGB(r,g,b);
+            setRGB(r, g, b);
         }
     }
 }
