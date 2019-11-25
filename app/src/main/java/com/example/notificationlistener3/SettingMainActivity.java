@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class SettingMainActivity extends AppCompatActivity {
     Button lampButton;
@@ -22,6 +23,9 @@ public class SettingMainActivity extends AppCompatActivity {
         lampButton = findViewById(R.id.lampSetting);
         timeButton = findViewById(R.id.timeSettings);
         buttonToNotifSetting = findViewById(R.id.buttonNotificationSetting);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
 
         lampButton.setOnClickListener(new View.OnClickListener() {
             @Override

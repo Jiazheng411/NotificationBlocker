@@ -1,12 +1,11 @@
 package com.example.notificationlistener3;
 
-import android.app.AppComponentFactory;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -48,5 +47,11 @@ public class RestTimeActivity extends AppCompatActivity {
                 startActivity( intent );
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 }
