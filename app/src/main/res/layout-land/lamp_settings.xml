@@ -85,6 +85,19 @@
         android:layout_height="10dp" />
 
     <Button
+        android:id="@+id/defaultValue"
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:text="Defalut value"
+        android:textColor="@android:color/background_light" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <Button
         android:id="@+id/confirm"
         android:layout_width="wrap_content"
         android:layout_height="33dp"
@@ -96,14 +109,5 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp" />
-
-    <Button
-        android:id="@+id/lampBack"
-        android:layout_width="162dp"
-        android:layout_height="33dp"
-        android:layout_gravity="center"
-        android:background="@color/colorPrimary"
-        android:text="@string/lampBack"
-        android:textColor="@android:color/background_light" />
 
 </LinearLayout>

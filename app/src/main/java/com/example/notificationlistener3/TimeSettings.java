@@ -4,13 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.content.Intent;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -19,7 +15,7 @@ public class TimeSettings extends AppCompatActivity{
     SeekBar restTime;
     TextView StudyTimevalue;
     TextView RestTimevalue;
-    Button timeback;
+    Button timedefault;
     String SetStudyTime;
     String SetRestTime;
     SharedPreferences tSaredPreferences;
@@ -33,20 +29,33 @@ public class TimeSettings extends AppCompatActivity{
         restTime = findViewById(R.id.restTime);
         StudyTimevalue = findViewById(R.id.studyTimeValue);
         RestTimevalue = findViewById(R.id.resttimeValue);
-        timeback = findViewById(R.id.timeBack);
+        timedefault = findViewById(R.id.timeDefault);
 
-        timeback.setOnClickListener(new View.OnClickListener() {
+        tSaredPreferences = getSharedPreferences("time settings",MODE_PRIVATE);
+        final SharedPreferences.Editor editor = tSaredPreferences.edit();
+        SetRestTime = tSaredPreferences.getString(Util_String.RESTING_TIME,"15");
+        SetStudyTime = tSaredPreferences.getString(Util_String.FOCUS_TIME,"60");
+        studyTime.setProgress(Integer.valueOf(SetStudyTime));
+        restTime.setProgress(Integer.valueOf(SetRestTime));
+        StudyTimevalue.setText(SetStudyTime);
+        RestTimevalue.setText(SetRestTime);
+
+
+        timedefault.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TimeSettings.this, SettingMainActivity.class);
-                startActivity(intent);
+                editor.putString(Util_String.RESTING_TIME,"15");
+                editor.putString(Util_String.FOCUS_TIME,"60");
+                studyTime.setProgress(60);
+                restTime.setProgress(15);
             }
         });
         studyTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 StudyTimevalue.setText(String.valueOf(i));
-                SetStudyTime = String.valueOf(i);
+                //SetStudyTime = String.valueOf(i);
+                editor.putString(Util_String.FOCUS_TIME,String.valueOf(i)).apply();
             }
 
             @Override
@@ -63,7 +72,8 @@ public class TimeSettings extends AppCompatActivity{
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 RestTimevalue.setText(String.valueOf(i));
-                SetRestTime = String.valueOf(i);
+                //SetRestTime = String.valueOf(i);
+                editor.putString(Util_String.RESTING_TIME,String.valueOf(i)).apply();
             }
 
             @Override
@@ -77,10 +87,6 @@ public class TimeSettings extends AppCompatActivity{
             }
         });
 
-        tSaredPreferences = getSharedPreferences("time settings",MODE_PRIVATE);
-        SharedPreferences.Editor editor = tSaredPreferences.edit();
-        editor.putString("RESTING_TIME",SetRestTime).apply();
-        editor.putString("FOUCUS_TIME",SetStudyTime).apply();
 
     }
 }

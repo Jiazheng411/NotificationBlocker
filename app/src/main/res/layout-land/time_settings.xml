@@ -71,13 +71,13 @@
         android:layout_height="50dp" />
 
     <Button
-        android:id="@+id/timeBack"
+        android:id="@+id/timeDefault"
         android:layout_width="151dp"
         android:layout_height="32dp"
         android:layout_gravity="center"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:text="@string/lampBack"
+        android:text="default value"
         android:textColor="@android:color/background_light" />
 
 </LinearLayout>
