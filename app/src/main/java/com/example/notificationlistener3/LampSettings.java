@@ -45,9 +45,9 @@ public class LampSettings extends AppCompatActivity {
 
         lSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         final SharedPreferences.Editor editor = lSharedPreferences.edit();
-        SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS,"128");
-        SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS,"128");
-        SetBBright = lSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS,"128");
+        SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS,"147");
+        SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS,"114");
+        SetBBright = lSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS,"110");
         brightnessR.setProgress(Integer.valueOf(SetRBright));
         brightnessG.setProgress(Integer.valueOf(SetGBright));
         brightnessB.setProgress(Integer.valueOf(SetBBright));
@@ -140,15 +140,15 @@ public class LampSettings extends AppCompatActivity {
         getDefaultValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putString(Util_String.LAMP_B_BRIGHTNESS,"128").apply();
-                editor.putString(Util_String.LAMP_G_BRIGHTNESS,"128").apply();
-                editor.putString(Util_String.LAMP_R_BRIGHTNESS,"128").apply();
-                brightnessR.setProgress(128);
-                brightnessG.setProgress(128);
-                brightnessB.setProgress(128);
-                brightnessRValue.setText("R value: " + "128");
-                brightnessGValue.setText("B value: " + "128");
-                brightnesBValue.setText("G value: " + "128");
+                editor.putString(Util_String.LAMP_R_BRIGHTNESS,"147").apply();
+                editor.putString(Util_String.LAMP_G_BRIGHTNESS,"114").apply();
+                editor.putString(Util_String.LAMP_B_BRIGHTNESS,"110").apply();
+                brightnessR.setProgress(147);
+                brightnessG.setProgress(114);
+                brightnessB.setProgress(110);
+                brightnessRValue.setText("R value: " + "147");
+                brightnessGValue.setText("G value: " + "114");
+                brightnesBValue.setText("B value: " + "110");
             }
         });
 
