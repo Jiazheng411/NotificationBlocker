@@ -17,7 +17,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class LampSettings extends AppCompatActivity {
-    Button lampback;
     Button getDefaultValue;
     Button confirm;
     SeekBar brightnessR;
@@ -46,15 +45,15 @@ public class LampSettings extends AppCompatActivity {
 
         lSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         final SharedPreferences.Editor editor = lSharedPreferences.edit();
-        SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS,"50");
-        SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS,"50");
-        SetBBright = lSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS,"50");
+        SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS,"128");
+        SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS,"128");
+        SetBBright = lSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS,"128");
         brightnessR.setProgress(Integer.valueOf(SetRBright));
         brightnessG.setProgress(Integer.valueOf(SetGBright));
         brightnessB.setProgress(Integer.valueOf(SetBBright));
         brightnessRValue.setText("R value: " + SetRBright);
-        brightnessGValue.setText("B value: " + SetGBright);
-        brightnesBValue.setText("G value: " + SetBBright);
+        brightnessGValue.setText("G value: " + SetGBright);
+        brightnesBValue.setText("B value: " + SetBBright);
         /*Log.i("sharedR",SetRBright);
         Log.i("sharedG",SetGBright);
         Log.i("sharedB",SetRBright);*/
@@ -87,7 +86,7 @@ public class LampSettings extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 brightnessRValue.setText("R value: " + String.valueOf(i));
-                //SetRBright = String.valueOf(i);
+                SetRBright = String.valueOf(i);
                 editor.putString(Util_String.LAMP_R_BRIGHTNESS,String.valueOf(i)).apply();
         }
 
@@ -105,7 +104,7 @@ public class LampSettings extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 brightnessGValue.setText("G value: " + String.valueOf(i));
-                //SetGBright = String.valueOf(i);
+                SetGBright = String.valueOf(i);
                 editor.putString(Util_String.LAMP_G_BRIGHTNESS,String.valueOf(i)).apply();
             }
 
@@ -123,7 +122,7 @@ public class LampSettings extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 brightnesBValue.setText("B value: " + String.valueOf(i));
-                //SetBBright = String.valueOf(i);
+                SetBBright = String.valueOf(i);
                 editor.putString(Util_String.LAMP_B_BRIGHTNESS,String.valueOf(i)).apply();
             }
 
@@ -141,15 +140,15 @@ public class LampSettings extends AppCompatActivity {
         getDefaultValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putString(Util_String.LAMP_B_BRIGHTNESS,"50").apply();
-                editor.putString(Util_String.LAMP_G_BRIGHTNESS,"50").apply();
-                editor.putString(Util_String.LAMP_R_BRIGHTNESS,"50").apply();
-                brightnessR.setProgress(50);
-                brightnessG.setProgress(50);
-                brightnessB.setProgress(50);
-                brightnessRValue.setText("R value: " + "50");
-                brightnessGValue.setText("B value: " + "50");
-                brightnesBValue.setText("G value: " + "50");
+                editor.putString(Util_String.LAMP_B_BRIGHTNESS,"128").apply();
+                editor.putString(Util_String.LAMP_G_BRIGHTNESS,"128").apply();
+                editor.putString(Util_String.LAMP_R_BRIGHTNESS,"128").apply();
+                brightnessR.setProgress(128);
+                brightnessG.setProgress(128);
+                brightnessB.setProgress(128);
+                brightnessRValue.setText("R value: " + "128");
+                brightnessGValue.setText("B value: " + "128");
+                brightnesBValue.setText("G value: " + "128");
             }
         });
 
