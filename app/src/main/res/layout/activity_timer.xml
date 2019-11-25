@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/TimerActivity">
+
+    <ImageButton android:id="@+id/settings"
+        android:layout_height="30dp"
+        android:layout_width="30dp"
+        android:alpha="0.8f"
+        android:src="@drawable/settings"
+        android:contentDescription="@string/TimerActivitySettings"
+        android:layout_gravity="top|right"/>
+
+    <ImageButton android:id="@+id/toggle"
+        android:layout_height="30dp"
+        android:layout_width="30dp"
+        android:alpha="0.8f"
+        android:src="@drawable/toggle"
+        android:contentDescription="@string/TimerActivityToggle"
+        android:layout_gravity="bottom|right"/>
+
+</FrameLayout>
