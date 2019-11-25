@@ -73,14 +73,14 @@ public class TimerView extends FrameLayout {
             studyTextII = new TextView(context);
             restTextI = new TextView(context);
 
-            // Fuck it.
+            // NAN
             studyCounter.setTextSize(25.0f);
             restCounter.setTextSize(50.0f);
             studyTextI.setTextSize(50.0f);
             studyTextII.setTextSize(25.0f);
             restTextI.setTextSize(50.0f);
 
-            // Five font settings nah I hate UI
+            // Five font settings nah NAN
             studyCounter.setTypeface(ResourcesCompat.getFont(context, R.font.calibril));
             restCounter.setTypeface(ResourcesCompat.getFont(context, R.font.calibril));
             studyTextI.setTypeface(ResourcesCompat.getFont(context, R.font.calibril));
@@ -101,7 +101,7 @@ public class TimerView extends FrameLayout {
             studyTextII.setTextAlignment(TEXT_ALIGNMENT_CENTER);
             restTextI.setTextAlignment(TEXT_ALIGNMENT_CENTER);
 
-            // Nah. Fucking troublesome
+            // Nah. NAN troublesome
             // Add to strings.xml:
             // <string name="UNTIL"><u>UNTIL</u></string>
             // <string name="NEXTBREAK">NEXT BREAK</string>
