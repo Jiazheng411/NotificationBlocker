@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         String appsNotBlocking = mSharedPreferences.getString(Util_String.APPS_RECEIVING_NOTIFICATION, "");
         HashSet<String> appsNotBlocked = new HashSet<>(Arrays.asList(appsNotBlocking.split(";")));
         appsNotBlocked.add("com.android.calendar");
-        appsNotBlocked.add("come.google.android.calendar");
+        appsNotBlocked.add("com.google.android.calendar");
         String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
         editor.putString(Util_String.APPS_RECEIVING_NOTIFICATION, AppsNotBlocking).apply();
 
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS, null);
         if (lampGBrightness == null) {
             lampGBrightness = "50";
-            editor.putString(Util_String.LAMP_G_BRIGHTNESS,lampRBrightness).apply();
+            editor.putString(Util_String.LAMP_G_BRIGHTNESS,lampGBrightness).apply();
         }
 
         String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS, null);
@@ -153,6 +154,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         normalDialog.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
