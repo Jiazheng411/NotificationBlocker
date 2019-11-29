@@ -14,7 +14,8 @@
         <service
             android:name=".BluetoothSerialService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true">
+        </service>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -45,6 +46,9 @@
         <activity
             android:name=".LampSettings"
             android:parentActivityName=".SettingMainActivity" />
+        <activity android:name=".TimerActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
     </application>
 
 </manifest>

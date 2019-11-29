@@ -43,7 +43,7 @@ public class LampSettings extends AppCompatActivity {
         confirm = findViewById(R.id.confirm);
         getDefaultValue = findViewById(R.id.defaultValue);
 
-        lSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
+        lSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
         final SharedPreferences.Editor editor = lSharedPreferences.edit();
         SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS,"147");
         SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS,"114");

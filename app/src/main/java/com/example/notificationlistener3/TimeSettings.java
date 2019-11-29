@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,10 +34,13 @@ public class TimeSettings extends AppCompatActivity{
         RestTimevalue = findViewById(R.id.resttimeValue);
         timedefault = findViewById(R.id.timeDefault);
 
-        tSaredPreferences = getSharedPreferences("time settings",MODE_PRIVATE);
+        tSaredPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         final SharedPreferences.Editor editor = tSaredPreferences.edit();
+        editor.putString(Util_String.CHANGEING_TIMING_SETTING, "true");
         SetRestTime = tSaredPreferences.getString(Util_String.RESTING_TIME,"15");
         SetStudyTime = tSaredPreferences.getString(Util_String.FOCUS_TIME,"60");
+        Log.i("Time settings", "resttime"+SetRestTime);
+        Log.i("Time settings", "focus time"+SetStudyTime);
         studyTime.setProgress(Integer.valueOf(SetStudyTime));
         restTime.setProgress(Integer.valueOf(SetRestTime));
         StudyTimevalue.setText(SetStudyTime);
@@ -52,8 +56,10 @@ public class TimeSettings extends AppCompatActivity{
             public void onClick(View view) {
                 editor.putString(Util_String.RESTING_TIME,"15");
                 editor.putString(Util_String.FOCUS_TIME,"60");
+                editor.apply();
                 studyTime.setProgress(60);
                 restTime.setProgress(15);
+
             }
         });
         studyTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

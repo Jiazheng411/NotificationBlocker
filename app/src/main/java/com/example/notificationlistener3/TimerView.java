@@ -3,7 +3,9 @@ package com.example.notificationlistener3;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,11 +17,14 @@ import java.util.Locale;
 
 import androidx.core.content.res.ResourcesCompat;
 
+import static android.content.Context.MODE_PRIVATE;
+
 // Frame Layout is needed if you need to emmmm... fade in fade out two different layouts for a single object
 // Remember, reset(study period, rest period) is in millisecond
 
 public class TimerView extends FrameLayout {
-
+    static SharedPreferences msharedPreference;
+    static SharedPreferences.Editor editor;
     // only one instance will be provided
     private static CountDownTimer event;
 
@@ -37,9 +42,13 @@ public class TimerView extends FrameLayout {
 
     private static int studyPeriod, restPeriod, textColor;
 
+    static String currentmode;
+
     // Useless constructor
     private TimerView(Context context){
         super(context);
+        msharedPreference = context.getSharedPreferences("setting",MODE_PRIVATE);
+        editor = msharedPreference.edit();
     }
 
     // Useful get instance
@@ -182,6 +191,34 @@ public class TimerView extends FrameLayout {
         study();
     }
 
+    // toggle study/rest mode
+    public static void toggleMode(){
+        Log.i("timeview", "togginging mode" + currentmode);
+        if("study".equals(currentmode)){
+            if(event != null) {
+                event.cancel();
+            }
+
+            // change to rest
+            viewStudy.setVisibility(View.GONE);
+            viewRest.setVisibility(View.VISIBLE);
+            TimerView.startTime = System.currentTimeMillis();
+            rest();
+        }
+        else if ("rest".equals(currentmode)){
+            if(event != null) {
+                event.cancel();
+            }
+
+            // change to study
+            viewStudy.setVisibility(View.VISIBLE);
+            viewRest.setVisibility(View.GONE);
+            TimerView.startTime = System.currentTimeMillis();
+            study();
+        }
+
+    }
+
     // To rest
     public static void rest(){
         viewRest.setAlpha(0.0f);
@@ -205,6 +242,10 @@ public class TimerView extends FrameLayout {
                 });
 
         startTime += studyPeriod;
+        currentmode = "rest";
+        Log.i("TimeView", ""+(restPeriod/60000));
+        // update shared preference
+        editor.putBoolean(Util_String.IS_BLOCKING, false).apply();
         event = new CountDownTimer(restPeriod, 1000) {
             @Override
             public void onTick(long l) {
@@ -233,7 +274,7 @@ public class TimerView extends FrameLayout {
         viewRest.animate()
                 .alpha(0.0f)
                 .setDuration(700)
-                .setListener(new AnimatorListenerAdapter() {
+                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
@@ -243,7 +284,10 @@ public class TimerView extends FrameLayout {
                 });
 
         startTime += restPeriod;
-
+        currentmode = "study";
+        // update shared preference
+        editor.putBoolean(Util_String.IS_BLOCKING, true).apply();
+        Log.i("TimeView", ""+(studyPeriod/60000));
         event = new CountDownTimer(studyPeriod, 1000) {
             @Override
             public void onTick(long l) {

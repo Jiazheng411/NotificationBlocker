@@ -47,6 +47,9 @@ public class RestTimeActivity extends AppCompatActivity {
                 startActivity( intent );
             }
         });
+
+        editor.putString(Util_String.CHANGEING_TIMING_SETTING, "true");
+
     }
 
     @Override

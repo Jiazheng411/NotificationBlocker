@@ -1,15 +1,9 @@
 package com.example.notificationlistener3;
 
-import android.content.ComponentName;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.text.TextUtils;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -48,7 +42,5 @@ public class MyNotificationListenerService extends NotificationListenerService {
     public void onNotificationRemoved(StatusBarNotification sbn) {
         Log.i("NotificationListener","Notification removed");
     }
-
-
 
 }
