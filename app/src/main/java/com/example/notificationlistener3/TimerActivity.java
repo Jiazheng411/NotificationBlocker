@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -72,6 +73,9 @@ public class TimerActivity extends AppCompatActivity {
         timerView.reset(studyPeriod, restPeriod);
         Log.i("TimerActivity", ""+studyTime);
         Log.i("TimerActivity", ""+restTime);
+        if(timerView.getParent() != null) {
+            ((ViewGroup)timerView.getParent()).removeView(timerView); // <- fix
+        }
         root.addView(timerView);
 
         Button settings = findViewById(R.id.settings);
