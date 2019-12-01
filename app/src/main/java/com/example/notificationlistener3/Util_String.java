@@ -8,5 +8,6 @@ class Util_String {
     static final String LAMP_R_BRIGHTNESS = "lamp r brightness";
     static final String LAMP_G_BRIGHTNESS = "lamp g brightness";
     static final String LAMP_B_BRIGHTNESS = "lamp b brightness";
+    static final String CHANGEING_TIMING_SETTING = "false";
 
 }

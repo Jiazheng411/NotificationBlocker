@@ -29,5 +29,9 @@
     <string name="lampSetting">Lamp Settings</string>
     <string name="timeSettings">Time Settings</string>
     <string name="onNotificationSetting">Notification Settings</string>
-
+    <string name="UNTIL"><u>UNTIL</u></string>
+    <string name="NEXTBREAK">NEXT BREAK</string>
+    <string name="NEXTSTUDYPERIOD"><u>NEXT STUDY PERIOD</u></string>
+    <string name="TimerActivitySettings">Jump to Settings</string>
+    <string name="TimerActivityToggle">Start Study or Rest</string>
 </resources>

@@ -14,8 +14,17 @@
         <service
             android:name=".BluetoothSerialService"
             android:enabled="true"
-            android:exported="true"></service>
-
+            android:exported="true">
+        </service>
+        <service
+            android:name=".MyNotificationListenerService"
+            android:enabled="true"
+            android:label="NotificationListener"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,15 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name=".MyNotificationListenerService"
-            android:label="NotificationListener"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
 
         <activity android:name=".FocusModeActivity" />
         <activity android:name=".RestTimeActivity" />
@@ -45,6 +45,9 @@
         <activity
             android:name=".LampSettings"
             android:parentActivityName=".SettingMainActivity" />
+        <activity android:name=".TimerActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
     </application>
 
 </manifest>

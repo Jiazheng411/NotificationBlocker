@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i("MainActivity", "startFocusMode button clicked");
-                Intent intent = new Intent(MainActivity.this, FocusModeActivity.class);
+                Intent intent = new Intent(MainActivity.this, TimerActivity.class);
                 startActivity(intent);
             }
         });
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         String restTime = mSharedPreferences.getString(Util_String.RESTING_TIME, null);
+        Log.i("Mainactivity", "rest time is" + restTime);
         if (restTime == null) {
             restTime = "15";
             editor.putString(Util_String.RESTING_TIME,restTime).apply();
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         String focusTime = mSharedPreferences.getString(Util_String.FOCUS_TIME, null);
+        Log.i("Mainactivity", "focus time is" + focusTime);
         if (focusTime == null) {
             focusTime = "60";
             editor.putString(Util_String.FOCUS_TIME, focusTime).apply();
