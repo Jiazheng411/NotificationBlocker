@@ -99,7 +99,7 @@ public class BluetoothSerialService extends Service {
             } else if (message.equals("hP1\n")) {
                 // connected
                 setRGB(last_value);
-                Intent enterFocusMode = new Intent(BluetoothSerialService.this, FocusModeActivity.class);
+                Intent enterFocusMode = new Intent(BluetoothSerialService.this, TimerActivity.class);
                 enterFocusMode.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(enterFocusMode);
             }

@@ -32,9 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".FocusModeActivity" />
-        <activity android:name=".RestTimeActivity" />
         <activity android:name=".SettingMainActivity" />
         <activity
             android:name=".SettingNotificationActivity"
