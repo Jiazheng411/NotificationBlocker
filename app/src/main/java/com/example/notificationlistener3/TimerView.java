@@ -3,6 +3,7 @@ package com.example.notificationlistener3;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -25,6 +26,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class TimerView extends FrameLayout {
     static SharedPreferences msharedPreference;
     static SharedPreferences.Editor editor;
+    static Context context;
     // only one instance will be provided
     private static CountDownTimer event;
 
@@ -47,6 +49,7 @@ public class TimerView extends FrameLayout {
     // Useless constructor
     private TimerView(Context context){
         super(context);
+        this.context = context;
         msharedPreference = context.getSharedPreferences("setting",MODE_PRIVATE);
         editor = msharedPreference.edit();
     }
@@ -246,6 +249,15 @@ public class TimerView extends FrameLayout {
         Log.i("TimeView", ""+(restPeriod/60000));
         // update shared preference
         editor.putBoolean(Util_String.IS_BLOCKING, false).apply();
+        String rBrightness = msharedPreference.getString(Util_String.LAMP_R_BRIGHTNESS_REST, "50");
+        String gBrightness = msharedPreference.getString(Util_String.LAMP_G_BRIGHTNESS_REST, "50");
+        String bBrightness = msharedPreference.getString(Util_String.LAMP_B_BRIGHTNESS_REST, "50");
+        Intent messager = new Intent();
+        messager.setAction("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
+        messager.putExtra("R",Integer.valueOf(rBrightness));
+        messager.putExtra("G", Integer.valueOf(gBrightness));
+        messager.putExtra("B", Integer.valueOf(bBrightness));
+        context.sendBroadcast(messager);
         event = new CountDownTimer(restPeriod, 1000) {
             @Override
             public void onTick(long l) {
@@ -287,6 +299,17 @@ public class TimerView extends FrameLayout {
         currentmode = "study";
         // update shared preference
         editor.putBoolean(Util_String.IS_BLOCKING, true).apply();
+
+        String rBrightness = msharedPreference.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY, "50");
+        String gBrightness = msharedPreference.getString(Util_String.LAMP_G_BRIGHTNESS_STUDY, "50");
+        String bBrightness = msharedPreference.getString(Util_String.LAMP_B_BRIGHTNESS_STUDY, "50");
+        Intent messager = new Intent();
+        messager.setAction("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
+        messager.putExtra("R",Integer.valueOf(rBrightness));
+        messager.putExtra("G", Integer.valueOf(gBrightness));
+        messager.putExtra("B", Integer.valueOf(bBrightness));
+        context.sendBroadcast(messager);
+
         Log.i("TimeView", ""+(studyPeriod/60000));
         event = new CountDownTimer(studyPeriod, 1000) {
             @Override

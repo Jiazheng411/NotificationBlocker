@@ -21,20 +21,33 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="35dp" />
+        android:layout_height="25dp" />
 
     <Button
         android:id="@+id/lampSetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:backgroundTint="@color/colorPrimary"
-        android:text="@string/textview"
+        android:text="Study Lamp Settings"
+        android:textColor="@android:color/background_light" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+
+    <Button
+        android:id="@+id/restButtonSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Rest lamp Setting"
         android:textColor="@android:color/background_light"
         android:layout_gravity="center"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="49dp" />
+        android:layout_height="25dp" />
 
     <Button
         android:id="@+id/timeSettings"
@@ -47,7 +60,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="49dp" />
+        android:layout_height="25dp" />
 
     <Button
         android:id="@+id/buttonNotificationSetting"
