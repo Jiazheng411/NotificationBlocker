@@ -45,9 +45,9 @@ public class LampSettings extends AppCompatActivity {
 
         lSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
         final SharedPreferences.Editor editor = lSharedPreferences.edit();
-        SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS,"147");
-        SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS,"114");
-        SetBBright = lSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS,"110");
+        SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY,"147");
+        SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_STUDY,"114");
+        SetBBright = lSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_STUDY,"110");
         brightnessR.setProgress(Integer.valueOf(SetRBright));
         brightnessG.setProgress(Integer.valueOf(SetGBright));
         brightnessB.setProgress(Integer.valueOf(SetBBright));
@@ -87,7 +87,7 @@ public class LampSettings extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 brightnessRValue.setText("R value: " + String.valueOf(i));
                 SetRBright = String.valueOf(i);
-                editor.putString(Util_String.LAMP_R_BRIGHTNESS,String.valueOf(i)).apply();
+                editor.putString(Util_String.LAMP_R_BRIGHTNESS_STUDY,String.valueOf(i)).apply();
         }
 
             @Override
@@ -105,7 +105,7 @@ public class LampSettings extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 brightnessGValue.setText("G value: " + String.valueOf(i));
                 SetGBright = String.valueOf(i);
-                editor.putString(Util_String.LAMP_G_BRIGHTNESS,String.valueOf(i)).apply();
+                editor.putString(Util_String.LAMP_G_BRIGHTNESS_STUDY,String.valueOf(i)).apply();
             }
 
             @Override
@@ -123,7 +123,7 @@ public class LampSettings extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 brightnesBValue.setText("B value: " + String.valueOf(i));
                 SetBBright = String.valueOf(i);
-                editor.putString(Util_String.LAMP_B_BRIGHTNESS,String.valueOf(i)).apply();
+                editor.putString(Util_String.LAMP_B_BRIGHTNESS_STUDY,String.valueOf(i)).apply();
             }
 
             @Override
@@ -140,9 +140,9 @@ public class LampSettings extends AppCompatActivity {
         getDefaultValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putString(Util_String.LAMP_R_BRIGHTNESS,"147").apply();
-                editor.putString(Util_String.LAMP_G_BRIGHTNESS,"114").apply();
-                editor.putString(Util_String.LAMP_B_BRIGHTNESS,"110").apply();
+                editor.putString(Util_String.LAMP_R_BRIGHTNESS_STUDY,"147").apply();
+                editor.putString(Util_String.LAMP_G_BRIGHTNESS_STUDY,"114").apply();
+                editor.putString(Util_String.LAMP_B_BRIGHTNESS_STUDY,"110").apply();
                 brightnessR.setProgress(147);
                 brightnessG.setProgress(114);
                 brightnessB.setProgress(110);

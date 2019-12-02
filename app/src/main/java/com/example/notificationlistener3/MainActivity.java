@@ -94,22 +94,40 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(Util_String.RESTING_TIME,restTime).apply();
         }
 
-        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS, null);
-        if (lampRBrightness == null) {
-            lampRBrightness = "50";
-            editor.putString(Util_String.LAMP_R_BRIGHTNESS,lampRBrightness).apply();
+        String lampRBrightnessStudy = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY, null);
+        if (lampRBrightnessStudy == null) {
+            lampRBrightnessStudy = "50";
+            editor.putString(Util_String.LAMP_R_BRIGHTNESS_STUDY,lampRBrightnessStudy).apply();
         }
 
-        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS, null);
-        if (lampGBrightness == null) {
-            lampGBrightness = "50";
-            editor.putString(Util_String.LAMP_G_BRIGHTNESS,lampGBrightness).apply();
+        String lampGBrightnessStudy = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_STUDY, null);
+        if (lampGBrightnessStudy == null) {
+            lampGBrightnessStudy = "50";
+            editor.putString(Util_String.LAMP_G_BRIGHTNESS_STUDY,lampGBrightnessStudy).apply();
         }
 
-        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS, null);
-        if (lampBBrightness == null) {
-            lampBBrightness = "50";
-            editor.putString(Util_String.LAMP_B_BRIGHTNESS,lampBBrightness).apply();
+        String lampBBrightnessStudy = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_STUDY, null);
+        if (lampBBrightnessStudy == null) {
+            lampBBrightnessStudy = "50";
+            editor.putString(Util_String.LAMP_B_BRIGHTNESS_STUDY,lampBBrightnessStudy).apply();
+        }
+
+        String lampRBrightnessRest = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_REST, null);
+        if (lampRBrightnessRest == null) {
+            lampRBrightnessRest = "50";
+            editor.putString(Util_String.LAMP_R_BRIGHTNESS_REST,lampRBrightnessRest).apply();
+        }
+
+        String lampGBrightnessRest = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_REST, null);
+        if (lampGBrightnessRest == null) {
+            lampGBrightnessRest = "50";
+            editor.putString(Util_String.LAMP_G_BRIGHTNESS_REST,lampGBrightnessRest).apply();
+        }
+
+        String lampBBrightnessRest = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_REST, null);
+        if (lampBBrightnessRest == null) {
+            lampBBrightnessRest = "50";
+            editor.putString(Util_String.LAMP_B_BRIGHTNESS_REST,lampBBrightnessRest).apply();
         }
 
 
