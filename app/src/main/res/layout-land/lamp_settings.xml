@@ -15,23 +15,23 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lamp Settings"
+            android:text="Study Lamp Settings"
             android:textSize="20sp"/>
     </androidx.appcompat.widget.Toolbar>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="15dp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#00FFFFFF"
+        android:gravity="center"
         android:text="@string/textview2"
         android:textColor="@android:color/background_dark"
-        android:textSize="24sp"
-        android:gravity="center"/>
+        android:textSize="18sp" />
 
     <Space
         android:layout_width="match_parent"
@@ -94,7 +94,7 @@
     <Button
         android:id="@+id/defaultValue"
         android:layout_width="117dp"
-        android:layout_height="wrap_content"
+        android:layout_height="27dp"
         android:layout_gravity="center"
         android:background="@color/colorPrimary"
         android:text="Defalut value"
@@ -110,7 +110,7 @@
         android:layout_height="33dp"
         android:layout_gravity="center"
         android:background="@color/colorPrimary"
-        android:text="@string/confirm"
+        android:text="preview"
         android:textColor="@android:color/background_light" />
 
     <Space
