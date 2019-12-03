@@ -14,17 +14,17 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 public class BluetoothSerialService extends Service {
     private static String tag = "IISP BLService";
-//    public static final String address = "B4:E6:2D:C0:B8:4B";
+    //    public static final String address = "B4:E6:2D:C0:B8:4B";
     public static final String address = "B4:E6:2D:D3:63:87";
     public static String BLUETOOTH_FAILED = "bluetooth-connection-failed";
     public static String BLUETOOTH_CONNECTED = "bluetooth-connection-started";
@@ -49,6 +49,7 @@ public class BluetoothSerialService extends Service {
         super.onCreate();
         Log.i(tag, "started service BluetoothService");
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        // check if the bluetooth adapter is valid and the bluetooth is enabled
         if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(intent);
@@ -64,24 +65,32 @@ public class BluetoothSerialService extends Service {
             Intent intent = new Intent(BLUETOOTH_CONNECTED);
             LocalBroadcastManager.getInstance(BluetoothSerialService.this).sendBroadcast(intent);
         }
+        // a receiver to listening for the connection state of bluetooth
         msgReceiver = new MsgReceiver();
         IntentFilter messager = new IntentFilter("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
         registerReceiver(msgReceiver, messager);
+        // get the saved setting value for the lamp from sharedPreferences
         mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
-        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY, null);
-        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_STUDY, null);
-        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_STUDY, null);
+        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS, null);
+        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS, null);
+        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS, null);
+        // initialize the last value of the light, in order for resend the message
         last_value[0] = (lampRBrightness != null) ? Integer.parseInt(lampRBrightness) : 50;
         last_value[1] = (lampGBrightness != null) ? Integer.parseInt(lampGBrightness) : 50;
         last_value[2] = (lampBBrightness != null) ? Integer.parseInt(lampBBrightness) : 50;
     }
-
+    /*
+    on service bind to any activity, this is not needed in out app
+     */
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    /*
+    reading the received message, and carry out corresponding actions
+     */
     public int read(int bufferSize, byte[] buffer) {
         if (bufferSize > 0) {
             StringBuilder sb = new StringBuilder();
@@ -89,20 +98,22 @@ public class BluetoothSerialService extends Service {
                 sb.append((char) buffer[i]);
             }
             String message = sb.toString();
+            // message not received or invalid need to resend the message
             if (message.equals("hN\n")) {
                 setRGB(last_value);
             } else if (message.equals("hP0\n")) {
-                // disconnected
+                // the phone is removed from the lamp change to main activity
                 Intent exitFocusMode = new Intent(BluetoothSerialService.this, MainActivity.class);
                 exitFocusMode.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(exitFocusMode);
             } else if (message.equals("hP1\n")) {
-                // connected
+                // the phone is put on the lamp and we focus mod activity is started here
                 setRGB(last_value);
                 Intent enterFocusMode = new Intent(BluetoothSerialService.this, TimerActivity.class);
                 enterFocusMode.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(enterFocusMode);
             }
+            // print out the received message, for debugging
             if (buffer[bufferSize - 1] == 10) {
                 Log.i(tag, "received message:" + message);
                 return bufferSize;
@@ -110,17 +121,20 @@ public class BluetoothSerialService extends Service {
         }
         return 0;
     }
-
+    // read the buffer from serialInputStream
     public int read(byte[] buffer, int byteOffset, int byteCount) throws IOException {
         if (connected)
             return serialInputStream.read(buffer, byteOffset, byteCount);
         throw new RuntimeException("Connection lost, reconnecting now.");
     }
 
+    // set RGB using a list
     public void setRGB(int[] rgb) {
         setRGB(rgb[0], rgb[1], rgb[2]);
     }
 
+    // set RGB main implementation
+    // message: head H, R:r, G:g, B:b and followed by the sum to check the message is valid
     public void setRGB(int r, int g, int b) {
         r = r % 256;
         g = g % 256;
@@ -146,9 +160,10 @@ public class BluetoothSerialService extends Service {
         }
         String message = "HR" + rs + "G" + gs + "B" + bs + "S" + ss;
         this.write(message);
-        Log.i(tag, "Sent message:"+message);
+        Log.i(tag, "Sent message:" + message);
     }
 
+    // send the message to the lamp
     public void write(String message) {
         message = message + "\n";
         byte[] buffer = message.getBytes();
@@ -161,9 +176,8 @@ public class BluetoothSerialService extends Service {
         }
     }
 
-    /**
-     * Initializes the bluetooth serial connections, uses the LocalBroadcastManager when
-     * connection is established
+    /*
+    trying to connect the target device using AsyncTask
      */
     @SuppressLint("StaticFieldLeak")
     public void connect() {
@@ -183,7 +197,7 @@ public class BluetoothSerialService extends Service {
         connectionTask = new AsyncTask<Void, Void, BluetoothDevice>() {
             int MAX_ATTEMPTS = 30;
             int attemptCounter = 0;
-
+            // attempting to connect for 30 times
             @Override
             protected BluetoothDevice doInBackground(Void... params) {
                 while (!isCancelled()) { //need to kill without calling onCancel
@@ -225,7 +239,7 @@ public class BluetoothSerialService extends Service {
                 LocalBroadcastManager.getInstance(BluetoothSerialService.this).sendBroadcast(intent);
                 return null;
             }
-
+            // after connected, start the sending and listening
             @Override
             protected void onPostExecute(BluetoothDevice result) {
                 super.onPostExecute(result);
@@ -246,18 +260,18 @@ public class BluetoothSerialService extends Service {
         Method m = device.getClass().getMethod("createRfcommSocket", new Class[]{int.class});
         return (BluetoothSocket) m.invoke(device, 1);
     }
-
+    // check availability
     public int available() throws IOException {
         if (connected)
             return serialInputStream.available();
         throw new RuntimeException("Connection lost, reconnecting now.");
     }
-
+    // serialreader class
     private class SerialReader extends Thread {
         private static final int MAX_BYTES = 125;
         byte[] buffer = new byte[MAX_BYTES];
         int bufferSize = 0;
-
+        // listening in the background
         public void run() {
             Log.i("serialReader", "Starting serial loop");
             while (!isInterrupted()) {
@@ -294,7 +308,7 @@ public class BluetoothSerialService extends Service {
             Log.i(tag, "Shutting serial loop");
         }
     }
-
+    // close the bluetooth serial
     public void close() {
         connected = false;
         if (connectionTask != null) {
@@ -347,7 +361,7 @@ public class BluetoothSerialService extends Service {
             }
         }
     };
-
+    // receiver to receive RGB value from other activities.
     public class MsgReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+//This page describe the study lamp settings of App
 public class LampSettings extends AppCompatActivity {
     Button getDefaultValue;
     Button confirm;
@@ -39,6 +40,8 @@ public class LampSettings extends AppCompatActivity {
         confirm = findViewById(R.id.confirm);
         getDefaultValue = findViewById(R.id.defaultValue);
 
+        //lSharedPreference saves the value of RGB with an initial value of 147,114,110 which
+        // can be modified by users later
         lSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
         final SharedPreferences.Editor editor = lSharedPreferences.edit();
         editor.putString(Util_String.CHANGING_LAMP_SETTING, "true").apply();
@@ -67,6 +70,9 @@ public class LampSettings extends AppCompatActivity {
                 startActivity(intent);
             }
         });*/
+
+        //Confirm is the preview button on the page, after clicking, it will pass the RGB value to
+        //the lamp to set a preview to users
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +85,8 @@ public class LampSettings extends AppCompatActivity {
                 sendBroadcast(messager);
             }
         });
+
+        //Users change the R value by seekbar
         brightnessR.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -97,6 +105,7 @@ public class LampSettings extends AppCompatActivity {
 
             }
         });
+        //Users change the G value by seekbar
         brightnessG.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -115,6 +124,7 @@ public class LampSettings extends AppCompatActivity {
 
             }
         });
+        //Users change the B value by seekbar
         brightnessB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -134,6 +144,7 @@ public class LampSettings extends AppCompatActivity {
             }
         });
 
+        //We pre-set a default RGB value for users to use
         getDefaultValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
