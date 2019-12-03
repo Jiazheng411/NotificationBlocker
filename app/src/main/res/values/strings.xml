@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NotificationListener3</string>
+    <string name="app_name">Focus Assistant</string>
     <string name="settings">Settings</string>
     <string name="start_focus">Start focus!</string>
     <string name="refocus">refocus now!</string>

@@ -1,36 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Study Lamp Settings"
-            android:textSize="20sp"/>
+            android:text="Rest Lamp Settings"
+            android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="35dp" />
+        android:layout_height="15dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
-        android:text="@string/textview2"
+        android:gravity="center"
+        android:text="Brightness"
         android:textColor="@android:color/background_dark"
-        android:textSize="24sp"
+        android:textSize="18sp" />
+
+    <SeekBar
+        android:id="@+id/restR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255"/>
+
+    <TextView
+        android:id="@+id/restRvalue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="R value: 50"
+        android:gravity="center"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <SeekBar
+        android:id="@+id/restG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255"/>
+
+    <TextView
+        android:id="@+id/restGvalue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="G value: 50"
         android:gravity="center"/>
 
     <Space
@@ -38,83 +68,41 @@
         android:layout_height="20dp" />
 
     <SeekBar
-        android:id="@+id/brightnessR"
+        android:id="@+id/restB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="255"
-        android:progress="50"/>
+        android:max="255"/>
 
     <TextView
-        android:id="@+id/brightnessRValue"
+        android:id="@+id/restBvalue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/brightnessRValue"
+        android:text="B value: 50"
         android:gravity="center"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
-    <SeekBar
-        android:id="@+id/brightnessG"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="255"
-        android:progress="50" />
-
-    <TextView
-        android:id="@+id/brightnessGValue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/brightnessGValue"
-        android:gravity="center" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
-    <SeekBar
-        android:id="@+id/brightnessB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="255"
-        android:progress="50"/>
-
-    <TextView
-        android:id="@+id/brightnessBvalue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/brightnessBvalue"
-        android:gravity="center"/>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="143dp" />
+        android:layout_height="10dp" />
 
     <Button
-        android:id="@+id/defaultValue"
-        android:layout_width="118dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/restDefalut"
+        android:layout_width="wrap_content"
+        android:layout_height="27dp"
         android:layout_gravity="center"
         android:background="@color/colorPrimary"
-        android:text="Defalut Value"
+        android:text="Default Value"
         android:textColor="@android:color/background_light" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="31dp" />
+        android:layout_height="10dp" />
 
     <Button
-        android:id="@+id/confirm"
+        android:id="@+id/restPreview"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="33dp"
+        android:layout_gravity="center"
         android:background="@color/colorPrimary"
-        android:text="preview"
-        android:textColor="@android:color/background_light"
-        android:layout_gravity="center" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
-
+        android:text="Preview"
+        android:textColor="@android:color/background_light" />
 </LinearLayout>
