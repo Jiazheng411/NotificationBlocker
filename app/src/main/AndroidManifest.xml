@@ -25,6 +25,7 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+        <service android:name=".NotificationCollectorMonitorService"></service>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +43,8 @@
         <activity
             android:name=".LampSettings"
             android:parentActivityName=".SettingMainActivity" />
+        <activity android:name=".RestLampSettings"
+            android:parentActivityName=".SettingMainActivity"/>
         <activity android:name=".TimerActivity"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"></activity>

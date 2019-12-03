@@ -20,15 +20,9 @@ import java.util.HashSet;
 import java.util.List;
 
 public class SettingNotificationActivity extends AppCompatActivity implements onCheckboxClicked, SearchView.OnQueryTextListener{
-    private RecyclerView recyclerView;
     private MyAdapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
     private PackageManager manager;
-
-    private SearchView searchView;
-
     private SharedPreferences mPreferences;
-
     private List<ApplicationInfo> applications;
 
     @Override
@@ -36,7 +30,8 @@ public class SettingNotificationActivity extends AppCompatActivity implements on
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_notification_activity);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        // tool bar
+        Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -45,33 +40,33 @@ public class SettingNotificationActivity extends AppCompatActivity implements on
         manager = getPackageManager();
         applications = manager.getInstalledApplications(0);
 
-        recyclerView = findViewById(R.id.appRecyclerView);
-        searchView = findViewById(R.id.notificationSearch);
+        // set up search view
+        SearchView searchView = findViewById(R.id.notificationSearch);
         if (searchView != null) {
             searchView.setOnQueryTextListener(this);
         }
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        // get all apps installed on this device
         applications = manager.getInstalledApplications(0);
 
+        // sort these apps according to names
         Collections.sort(applications, new Comparator<ApplicationInfo>() {
             @Override
             public int compare(ApplicationInfo app1, ApplicationInfo app2) {
                 String label1 = app1.loadLabel(manager).toString();
                 String label2 = app2.loadLabel(manager).toString();
-
                 return label1.compareToIgnoreCase(label2);
             }
         });
-
-        // specify an adapter (see also next example)
+        RecyclerView recyclerView = findViewById(R.id.appRecyclerView);
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true);
+        // use a linear layout manager for recycler view
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        // specify the adapter
         mAdapter = new MyAdapter(SettingNotificationActivity.this, applications, this);
+        // set adapter for the recycler view
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -79,6 +74,7 @@ public class SettingNotificationActivity extends AppCompatActivity implements on
     @Override
     public void OnCheckboxClicked(int pos, boolean isChecked){
         String appname = mAdapter.getItem(pos).packageName;
+        // apps that are not blocked
         HashSet<String> appsNotBlocking = new HashSet<>(Arrays.asList(mPreferences.getString(Util_String.APPS_RECEIVING_NOTIFICATION, "").split(";")));
 
         if (isChecked) {
@@ -96,6 +92,7 @@ public class SettingNotificationActivity extends AppCompatActivity implements on
         return false;
     }
 
+    // search
     @Override
     public boolean onQueryTextChange(String newText) {
         if (TextUtils.isEmpty(newText)) {

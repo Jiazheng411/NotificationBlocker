@@ -3,6 +3,7 @@ package com.example.notificationlistener3;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -25,28 +26,28 @@ import static android.content.Context.MODE_PRIVATE;
 public class TimerView extends FrameLayout {
     static SharedPreferences msharedPreference;
     static SharedPreferences.Editor editor;
+    static Context context;
     // only one instance will be provided
     private static CountDownTimer event;
 
     private static TimerView timerView;
 
     private static LinearLayout viewStudy;
-    private static LinearLayout viewStudyVertical;
     private static LinearLayout viewRest;
-
-    private static TextClock clock;
 
     private static TextView studyCounter, restCounter, studyTextI, studyTextII, restTextI;
 
     private static long startTime;
 
-    private static int studyPeriod, restPeriod, textColor;
+    private static int studyPeriod;
+    private static int restPeriod;
 
-    static String currentmode;
+    static String currentMode;
 
     // Useless constructor
     private TimerView(Context context){
         super(context);
+        this.context = context;
         msharedPreference = context.getSharedPreferences("setting",MODE_PRIVATE);
         editor = msharedPreference.edit();
     }
@@ -57,12 +58,12 @@ public class TimerView extends FrameLayout {
             // Everything starts here
             timerView = new TimerView(context);
             viewStudy = new LinearLayout(context);
-            viewStudyVertical = new LinearLayout(context);
+            LinearLayout viewStudyVertical = new LinearLayout(context);
             viewRest = new LinearLayout(context);
-            clock = new TextClock(context);
+            TextClock clock = new TextClock(context);
             clock.setFormat24Hour("hh:mm");
             clock.setFormat12Hour("kk:mm");
-            textColor = 0xBFEFEFEF;
+            int textColor = 0xBFEFEFEF;
 
             // By default we set study period to 45 and rest period to 15
             studyPeriod = 2700000;
@@ -192,9 +193,9 @@ public class TimerView extends FrameLayout {
     }
 
     // toggle study/rest mode
-    public static void toggleMode(){
-        Log.i("timeview", "togginging mode" + currentmode);
-        if("study".equals(currentmode)){
+    public void toggleMode(){
+        Log.i("timeview", "togginging mode" + currentMode);
+        if("study".equals(currentMode)){
             if(event != null) {
                 event.cancel();
             }
@@ -205,7 +206,7 @@ public class TimerView extends FrameLayout {
             TimerView.startTime = System.currentTimeMillis();
             rest();
         }
-        else if ("rest".equals(currentmode)){
+        else if ("rest".equals(currentMode)){
             if(event != null) {
                 event.cancel();
             }
@@ -220,7 +221,7 @@ public class TimerView extends FrameLayout {
     }
 
     // To rest
-    public static void rest(){
+    public void rest(){
         viewRest.setAlpha(0.0f);
         viewRest.setVisibility(View.VISIBLE);
 
@@ -242,10 +243,19 @@ public class TimerView extends FrameLayout {
                 });
 
         startTime += studyPeriod;
-        currentmode = "rest";
+        currentMode = "rest";
         Log.i("TimeView", ""+(restPeriod/60000));
         // update shared preference
         editor.putBoolean(Util_String.IS_BLOCKING, false).apply();
+        String rBrightness = msharedPreference.getString(Util_String.LAMP_R_BRIGHTNESS_REST, "50");
+        String gBrightness = msharedPreference.getString(Util_String.LAMP_G_BRIGHTNESS_REST, "50");
+        String bBrightness = msharedPreference.getString(Util_String.LAMP_B_BRIGHTNESS_REST, "50");
+        Intent messager = new Intent();
+        messager.setAction("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
+        messager.putExtra("R",Integer.valueOf(rBrightness));
+        messager.putExtra("G", Integer.valueOf(gBrightness));
+        messager.putExtra("B", Integer.valueOf(bBrightness));
+        context.sendBroadcast(messager);
         event = new CountDownTimer(restPeriod, 1000) {
             @Override
             public void onTick(long l) {
@@ -261,7 +271,7 @@ public class TimerView extends FrameLayout {
     }
 
     // To study
-    public static void study(){
+    public void study(){
         viewStudy.setAlpha(0.0f);
         viewStudy.setVisibility(View.VISIBLE);
 
@@ -284,9 +294,20 @@ public class TimerView extends FrameLayout {
                 });
 
         startTime += restPeriod;
-        currentmode = "study";
+        currentMode = "study";
         // update shared preference
         editor.putBoolean(Util_String.IS_BLOCKING, true).apply();
+
+        String rBrightness = msharedPreference.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY, "50");
+        String gBrightness = msharedPreference.getString(Util_String.LAMP_G_BRIGHTNESS_STUDY, "50");
+        String bBrightness = msharedPreference.getString(Util_String.LAMP_B_BRIGHTNESS_STUDY, "50");
+        Intent messager = new Intent();
+        messager.setAction("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
+        messager.putExtra("R",Integer.valueOf(rBrightness));
+        messager.putExtra("G", Integer.valueOf(gBrightness));
+        messager.putExtra("B", Integer.valueOf(bBrightness));
+        context.sendBroadcast(messager);
+
         Log.i("TimeView", ""+(studyPeriod/60000));
         event = new CountDownTimer(studyPeriod, 1000) {
             @Override

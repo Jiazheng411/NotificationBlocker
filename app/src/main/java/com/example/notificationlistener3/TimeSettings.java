@@ -6,13 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+//This page describe the time setting of App
 public class TimeSettings extends AppCompatActivity{
     SeekBar studyTime;
     SeekBar restTime;
@@ -34,9 +34,11 @@ public class TimeSettings extends AppCompatActivity{
         RestTimevalue = findViewById(R.id.resttimeValue);
         timedefault = findViewById(R.id.timeDefault);
 
+        //tSharedPreference saves the value of study time and rest time with an initial value
+        // of 60 and 15 which can be modified by users later
         tSaredPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         final SharedPreferences.Editor editor = tSaredPreferences.edit();
-        editor.putString(Util_String.CHANGEING_TIMING_SETTING, "true");
+        editor.putString(Util_String.CHANGING_TIMING_SETTING, "true").apply();
         SetRestTime = tSaredPreferences.getString(Util_String.RESTING_TIME,"15");
         SetStudyTime = tSaredPreferences.getString(Util_String.FOCUS_TIME,"60");
         Log.i("Time settings", "resttime"+SetRestTime);
@@ -51,6 +53,7 @@ public class TimeSettings extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //We set a defalut value of study and rest time for users to use
         timedefault.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +65,7 @@ public class TimeSettings extends AppCompatActivity{
 
             }
         });
+        //Users can change the study time they want
         studyTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -80,6 +84,7 @@ public class TimeSettings extends AppCompatActivity{
 
             }
         });
+        //Users can change the rest time they want
         restTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

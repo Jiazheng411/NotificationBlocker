@@ -82,10 +82,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     private onCheckboxClicked checkedListener;
 
     // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+        // each data item represents an app
+        // each app has an icon image, a name text and a status checkbox
         ImageView icon;
         TextView name;
         CheckBox status;
@@ -97,7 +96,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             icon = view.findViewById(R.id.app_icon);
             name = view.findViewById(R.id.app_name);
             status = view.findViewById(R.id.app_status);
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -115,7 +113,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    // constructor
     public MyAdapter(Context context, List<ApplicationInfo> apps, onCheckboxClicked listener) {
         this.apps = apps;
         this.checkedListener = listener;
@@ -146,16 +144,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         holder.status.setChecked(notBlocked.contains(app.packageName));
     }
 
-    // Return the size of your apps (invoked by the layout manager)
+    // Return the size of apps (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return apps.size();
     }
 
+    // get item at a certain position
     public ApplicationInfo getItem(int position) {
         return apps.get(position);
     }
 
+    // set apps of recycler view and notify changes
     public void setApps(List<ApplicationInfo> apps) {
         this.apps = apps;
         notifyDataSetChanged();
