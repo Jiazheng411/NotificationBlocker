@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -48,15 +48,18 @@ public class MainActivity extends AppCompatActivity {
         // start the bluetooth Service here
         Intent bluetoothService = new Intent(MainActivity.this, BluetoothSerialService.class);
         startService(bluetoothService);
+        // start notification collector monitor service
+        startService(new Intent(this, NotificationCollectorMonitorService.class));
 
+
+        // get reference to the views
         settingButton = findViewById(R.id.buttonSetting);
         startFocusModeButton = findViewById(R.id.buttonStartFocusMode);
-        mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        boolean is_blocking = false;
-        editor.putBoolean(Util_String.IS_BLOCKING, is_blocking).apply();
-        Log.i("MainActivity", "edit shared preference is_blocking, not blocking notification");
 
+        // get reference to mSharedPreference
+        mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
+
+        // set on click listener to perform page change to setting page
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // set on click listender to perform page change to timer view
         startFocusModeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        startService(new Intent(this, NotificationCollectorMonitorService.class));
     }
 
     @Override
@@ -91,9 +93,9 @@ public class MainActivity extends AppCompatActivity {
         appsNotBlocked.add("com.google.android.calendar");
         String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
         editor.putString(Util_String.APPS_RECEIVING_NOTIFICATION, AppsNotBlocking).apply();
-        editor.putString(Util_String.CHANGEING_LAMP_SETTING, "false").apply();
-        editor.putString(Util_String.CHANGEING_TIMING_SETTING, "false").apply();
-        Log.i("MainActivity", mSharedPreferences.getString(Util_String.CHANGEING_TIMING_SETTING, "false"));
+        editor.putString(Util_String.CHANGING_LAMP_SETTING, "false").apply();
+        editor.putString(Util_String.CHANGING_TIMING_SETTING, "false").apply();
+        Log.i("MainActivity", mSharedPreferences.getString(Util_String.CHANGING_TIMING_SETTING, "false"));
 
         // update sharedpreference for default value
         String focusTime = mSharedPreferences.getString(Util_String.FOCUS_TIME, null);

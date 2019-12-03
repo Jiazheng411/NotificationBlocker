@@ -33,18 +33,16 @@ public class TimerView extends FrameLayout {
     private static TimerView timerView;
 
     private static LinearLayout viewStudy;
-    private static LinearLayout viewStudyVertical;
     private static LinearLayout viewRest;
-
-    private static TextClock clock;
 
     private static TextView studyCounter, restCounter, studyTextI, studyTextII, restTextI;
 
     private static long startTime;
 
-    private static int studyPeriod, restPeriod, textColor;
+    private static int studyPeriod;
+    private static int restPeriod;
 
-    static String currentmode;
+    static String currentMode;
 
     // Useless constructor
     private TimerView(Context context){
@@ -60,12 +58,12 @@ public class TimerView extends FrameLayout {
             // Everything starts here
             timerView = new TimerView(context);
             viewStudy = new LinearLayout(context);
-            viewStudyVertical = new LinearLayout(context);
+            LinearLayout viewStudyVertical = new LinearLayout(context);
             viewRest = new LinearLayout(context);
-            clock = new TextClock(context);
+            TextClock clock = new TextClock(context);
             clock.setFormat24Hour("hh:mm");
             clock.setFormat12Hour("kk:mm");
-            textColor = 0xBFEFEFEF;
+            int textColor = 0xBFEFEFEF;
 
             // By default we set study period to 45 and rest period to 15
             studyPeriod = 2700000;
@@ -195,9 +193,9 @@ public class TimerView extends FrameLayout {
     }
 
     // toggle study/rest mode
-    public static void toggleMode(){
-        Log.i("timeview", "togginging mode" + currentmode);
-        if("study".equals(currentmode)){
+    public void toggleMode(){
+        Log.i("timeview", "togginging mode" + currentMode);
+        if("study".equals(currentMode)){
             if(event != null) {
                 event.cancel();
             }
@@ -208,7 +206,7 @@ public class TimerView extends FrameLayout {
             TimerView.startTime = System.currentTimeMillis();
             rest();
         }
-        else if ("rest".equals(currentmode)){
+        else if ("rest".equals(currentMode)){
             if(event != null) {
                 event.cancel();
             }
@@ -223,7 +221,7 @@ public class TimerView extends FrameLayout {
     }
 
     // To rest
-    public static void rest(){
+    public void rest(){
         viewRest.setAlpha(0.0f);
         viewRest.setVisibility(View.VISIBLE);
 
@@ -245,7 +243,7 @@ public class TimerView extends FrameLayout {
                 });
 
         startTime += studyPeriod;
-        currentmode = "rest";
+        currentMode = "rest";
         Log.i("TimeView", ""+(restPeriod/60000));
         // update shared preference
         editor.putBoolean(Util_String.IS_BLOCKING, false).apply();
@@ -273,7 +271,7 @@ public class TimerView extends FrameLayout {
     }
 
     // To study
-    public static void study(){
+    public void study(){
         viewStudy.setAlpha(0.0f);
         viewStudy.setVisibility(View.VISIBLE);
 
@@ -296,7 +294,7 @@ public class TimerView extends FrameLayout {
                 });
 
         startTime += restPeriod;
-        currentmode = "study";
+        currentMode = "study";
         // update shared preference
         editor.putBoolean(Util_String.IS_BLOCKING, true).apply();
 

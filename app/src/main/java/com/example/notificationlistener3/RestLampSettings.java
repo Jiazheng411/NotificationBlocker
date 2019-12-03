@@ -6,13 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.content.Intent;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -45,7 +41,7 @@ public class RestLampSettings extends AppCompatActivity{
 
         lSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         final SharedPreferences.Editor editor = lSharedPreferences.edit();
-        editor.putString(Util_String.CHANGEING_LAMP_SETTING, "true").apply();
+        editor.putString(Util_String.CHANGING_LAMP_SETTING, "true").apply();
         SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_REST,"237");
         SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_REST,"220");
         SetBBright = lSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_REST,"128");

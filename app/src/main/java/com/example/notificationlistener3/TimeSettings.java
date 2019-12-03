@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
@@ -36,7 +35,7 @@ public class TimeSettings extends AppCompatActivity{
 
         tSaredPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         final SharedPreferences.Editor editor = tSaredPreferences.edit();
-        editor.putString(Util_String.CHANGEING_TIMING_SETTING, "true").apply();
+        editor.putString(Util_String.CHANGING_TIMING_SETTING, "true").apply();
         SetRestTime = tSaredPreferences.getString(Util_String.RESTING_TIME,"15");
         SetStudyTime = tSaredPreferences.getString(Util_String.FOCUS_TIME,"60");
         Log.i("Time settings", "resttime"+SetRestTime);
