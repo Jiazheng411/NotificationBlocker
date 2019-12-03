@@ -45,6 +45,7 @@ public class RestLampSettings extends AppCompatActivity{
 
         lSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         final SharedPreferences.Editor editor = lSharedPreferences.edit();
+        editor.putString(Util_String.CHANGEING_LAMP_SETTING, "true").apply();
         SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_REST,"237");
         SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_REST,"220");
         SetBBright = lSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_REST,"128");

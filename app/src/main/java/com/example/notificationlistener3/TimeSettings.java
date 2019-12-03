@@ -36,7 +36,7 @@ public class TimeSettings extends AppCompatActivity{
 
         tSaredPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         final SharedPreferences.Editor editor = tSaredPreferences.edit();
-        editor.putString(Util_String.CHANGEING_TIMING_SETTING, "true");
+        editor.putString(Util_String.CHANGEING_TIMING_SETTING, "true").apply();
         SetRestTime = tSaredPreferences.getString(Util_String.RESTING_TIME,"15");
         SetStudyTime = tSaredPreferences.getString(Util_String.FOCUS_TIME,"60");
         Log.i("Time settings", "resttime"+SetRestTime);

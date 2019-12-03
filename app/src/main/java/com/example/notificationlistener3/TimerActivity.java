@@ -107,15 +107,48 @@ public class TimerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i("TimeActivity","onResume");
-        Log.i("TimeActivity","TimeActivity"+ msharedPreference.getString(Util_String.CHANGEING_TIMING_SETTING, "false"));
+        Log.i("TimeActivity","TimeActivity timing setting"+ msharedPreference.getString(Util_String.CHANGEING_TIMING_SETTING, "false"));
+        Log.i("TimeActivity","TimeActivity lamp setting changed"+ msharedPreference.getString(Util_String.CHANGEING_LAMP_SETTING, "false"));
+        SharedPreferences.Editor editor = msharedPreference.edit();
         if (msharedPreference.getString(Util_String.CHANGEING_TIMING_SETTING, "false").equals("true") ){
+            Log.i("TimerActivity", "reset to study mode");
             studyTime = msharedPreference.getString(Util_String.FOCUS_TIME, "45");
             restTime = msharedPreference.getString(Util_String.RESTING_TIME, "15");
             int studyPeriod = Integer.valueOf(studyTime) * 60000;
             int restPeriod = Integer.valueOf(restTime) * 60000;
             timerView.reset(studyPeriod, restPeriod);
-            SharedPreferences.Editor editor = msharedPreference.edit();
             editor.putString(Util_String.CHANGEING_TIMING_SETTING, "false").apply();
+        }else{
+            if(msharedPreference.getString(Util_String.CHANGEING_LAMP_SETTING,"false").equals("true")){
+                Log.i("Timeractivity", "lamp setting changed");
+                editor.putString(Util_String.CHANGEING_LAMP_SETTING, "false").apply();
+                if(timerView.currentmode.equals("study")){
+                    Log.i("TimerActivity","in study mode");
+                    String rBrightness = msharedPreference.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY, "50");
+                    String gBrightness = msharedPreference.getString(Util_String.LAMP_G_BRIGHTNESS_STUDY, "50");
+                    String bBrightness = msharedPreference.getString(Util_String.LAMP_B_BRIGHTNESS_STUDY, "50");
+                    Intent messager = new Intent();
+                    messager.setAction("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
+                    messager.putExtra("R",Integer.valueOf(rBrightness));
+                    messager.putExtra("G", Integer.valueOf(gBrightness));
+                    messager.putExtra("B", Integer.valueOf(bBrightness));
+                    sendBroadcast(messager);
+
+                }else if (timerView.currentmode.equals("rest")){
+                    Log.i("TimerActivity","in rest mode");
+                    String rBrightness = msharedPreference.getString(Util_String.LAMP_R_BRIGHTNESS_REST, "50");
+                    String gBrightness = msharedPreference.getString(Util_String.LAMP_G_BRIGHTNESS_REST, "50");
+                    String bBrightness = msharedPreference.getString(Util_String.LAMP_B_BRIGHTNESS_REST, "50");
+                    Intent messager = new Intent();
+                    messager.setAction("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
+                    messager.putExtra("R",Integer.valueOf(rBrightness));
+                    messager.putExtra("G", Integer.valueOf(gBrightness));
+                    messager.putExtra("B", Integer.valueOf(bBrightness));
+                    sendBroadcast(messager);
+
+                }
+            }
+
         }
     }
 }

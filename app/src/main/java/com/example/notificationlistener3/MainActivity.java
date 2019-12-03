@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        startService(new Intent(this, NotificationCollectorMonitorService.class));
     }
 
     @Override
@@ -89,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
         appsNotBlocked.add("com.google.android.calendar");
         String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
         editor.putString(Util_String.APPS_RECEIVING_NOTIFICATION, AppsNotBlocking).apply();
+        editor.putString(Util_String.CHANGEING_LAMP_SETTING, "false").apply();
+        editor.putString(Util_String.CHANGEING_TIMING_SETTING, "false").apply();
+        Log.i("MainActivity", mSharedPreferences.getString(Util_String.CHANGEING_TIMING_SETTING, "false"));
 
         // update sharedpreference for default value
         String focusTime = mSharedPreferences.getString(Util_String.FOCUS_TIME, null);
