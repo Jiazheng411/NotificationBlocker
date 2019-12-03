@@ -17,17 +17,21 @@ import androidx.appcompat.app.AppCompatActivity;
 public class TimerActivity extends AppCompatActivity {
     String restTime;
     String studyTime;
+    Button setting;
+    Button toggle;
     SharedPreferences msharedPreference;
     TimerView timerView;
     Long i = 50l;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_timer);
+        // full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // screen always on
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        setContentView(R.layout.activity_timer);
         final FrameLayout root = findViewById(R.id.TimerActivity);
 
         DynamicBackground.initialize();
@@ -48,8 +52,8 @@ public class TimerActivity extends AppCompatActivity {
             }
         }, 10000);
         */
-        //Use this part if you want to speed up time
 
+        //set dynamic background to change faster
         root.setBackground(DynamicBackground.getBackground(0));
         msharedPreference = getSharedPreferences("setting", MODE_PRIVATE);
         studyTime = msharedPreference.getString(Util_String.FOCUS_TIME, "45");
@@ -71,19 +75,22 @@ public class TimerActivity extends AppCompatActivity {
         timerView.reset(studyPeriod, restPeriod);
         Log.i("TimerActivity", ""+studyTime);
         Log.i("TimerActivity", ""+restTime);
+
+        // ensure one view only has one parent
         if(timerView.getParent() != null) {
             ((ViewGroup)timerView.getParent()).removeView(timerView); // <- fix
         }
         root.addView(timerView);
 
-        Button settings = findViewById(R.id.settings);
-        Button toggle = findViewById(R.id.toggle);
+        // get reference to buttons
+        setting = findViewById(R.id.settings);
+        toggle = findViewById(R.id.toggle);
 
-        settings.bringToFront();
+        setting.bringToFront();
         toggle.bringToFront();
 
-        //
-        settings.setOnClickListener(new View.OnClickListener() {
+        // on click listener to change to setting activity
+        setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TimerActivity.this, SettingMainActivity.class);
@@ -91,6 +98,7 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
 
+        // on click listener to toggle study and rest modes
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +116,8 @@ public class TimerActivity extends AppCompatActivity {
         Log.i("TimeActivity","TimeActivity timing setting"+ msharedPreference.getString(Util_String.CHANGING_TIMING_SETTING, "false"));
         Log.i("TimeActivity","TimeActivity lamp setting changed"+ msharedPreference.getString(Util_String.CHANGING_LAMP_SETTING, "false"));
         SharedPreferences.Editor editor = msharedPreference.edit();
+
+        // reset study mode if time setting is changed
         if (msharedPreference.getString(Util_String.CHANGING_TIMING_SETTING, "false").equals("true") ){
             Log.i("TimerActivity", "reset to study mode");
             studyTime = msharedPreference.getString(Util_String.FOCUS_TIME, "45");
@@ -117,9 +127,11 @@ public class TimerActivity extends AppCompatActivity {
             timerView.reset(studyPeriod, restPeriod);
             editor.putString(Util_String.CHANGING_TIMING_SETTING, "false").apply();
         }else{
+            // send message to lamp if lamp setting is changed and time setting is not changed
             if(msharedPreference.getString(Util_String.CHANGING_LAMP_SETTING,"false").equals("true")){
                 Log.i("Timeractivity", "lamp setting changed");
                 editor.putString(Util_String.CHANGING_LAMP_SETTING, "false").apply();
+                // message to inform lamp change to study mode
                 if(timerView.currentMode.equals("study")){
                     Log.i("TimerActivity","in study mode");
                     String rBrightness = msharedPreference.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY, "50");
@@ -132,6 +144,7 @@ public class TimerActivity extends AppCompatActivity {
                     messager.putExtra("B", Integer.valueOf(bBrightness));
                     sendBroadcast(messager);
 
+                // message to inform lamp to change to rest mode
                 }else if (timerView.currentMode.equals("rest")){
                     Log.i("TimerActivity","in rest mode");
                     String rBrightness = msharedPreference.getString(Util_String.LAMP_R_BRIGHTNESS_REST, "50");

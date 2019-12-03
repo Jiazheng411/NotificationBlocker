@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // get notification management permission
+        // show normal dialog to get notification manage permission if not having this permission
         if (!isEnabled()) {
             showNormalDialog();
             }
@@ -46,11 +46,12 @@ public class MainActivity extends AppCompatActivity {
             }
         
         // start the bluetooth Service here
-        Intent bluetoothService = new Intent(MainActivity.this, BluetoothSerialService.class);
+        Intent bluetoothService = new Intent(this, BluetoothSerialService.class);
         startService(bluetoothService);
-        // start notification collector monitor service
-        startService(new Intent(this, NotificationCollectorMonitorService.class));
 
+        // start notification collector monitor service
+        Intent notificationCollectorMonitor = new Intent(this, NotificationCollectorMonitorService.class);
+        startService(notificationCollectorMonitor);
 
         // get reference to the views
         settingButton = findViewById(R.id.buttonSetting);
@@ -158,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
         final String flat = Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners");
         if (!TextUtils.isEmpty(flat)) {
             final String[] names = flat.split(":");
-            for (int i = 0; i < names.length; i++) {
-                final ComponentName cn = ComponentName.unflattenFromString(names[i]);
+            for (String name : names) {
+                final ComponentName cn = ComponentName.unflattenFromString(name);
                 if (cn != null) {
                     if (TextUtils.equals(pkgName, cn.getPackageName())) {
                         return true;
@@ -170,16 +171,17 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    // show normal dialog to prompt user to give notification manage permission
     private void showNormalDialog(){
-
         final AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(MainActivity.this);
         normalDialog.setTitle("Notification Manage Permission");
-        normalDialog.setMessage("Please let us manage your notification");
+        normalDialog.setMessage("Please let us manage your notifications");
         normalDialog.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        // go to setting notification manage page
                         startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
                     }
                 });

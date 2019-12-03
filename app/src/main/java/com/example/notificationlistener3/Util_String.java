@@ -1,5 +1,6 @@
 package com.example.notificationlistener3;
 
+/** keys in shared preferences*/
 class Util_String {
     static final String IS_BLOCKING = "is blocking";
     static final String APPS_RECEIVING_NOTIFICATION = "apps receiving notification";
@@ -13,6 +14,5 @@ class Util_String {
     static final String LAMP_R_BRIGHTNESS_REST = "lamp r brightness rest";
     static final String LAMP_G_BRIGHTNESS_REST = "lamp g brightness rest";
     static final String LAMP_B_BRIGHTNESS_REST = "lamp b brightness rest";
-
 
 }
