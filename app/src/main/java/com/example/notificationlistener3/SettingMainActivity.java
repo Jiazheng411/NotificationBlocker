@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+//This class describe the main setting page of APP
 public class SettingMainActivity extends AppCompatActivity {
     Button lampButton;
     Button timeButton;
@@ -35,6 +36,8 @@ public class SettingMainActivity extends AppCompatActivity {
             }
         });
 
+        //lampButton is the "study lamp settings" button on the page, which will lead you to
+        //the study lamp setting page
         lampButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +45,8 @@ public class SettingMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //timeButton is the "time settings" button on the page, which will lead you to
+        //the time setting page
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
