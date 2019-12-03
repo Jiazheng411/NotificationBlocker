@@ -68,9 +68,9 @@ public class BluetoothSerialService extends Service {
         IntentFilter messager = new IntentFilter("com.example.notificationblocker.BluetoothSerialService.MESSAGE");
         registerReceiver(msgReceiver, messager);
         mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
-        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS, null);
-        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS, null);
-        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS, null);
+        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY, null);
+        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_STUDY, null);
+        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_STUDY, null);
         last_value[0] = (lampRBrightness != null) ? Integer.parseInt(lampRBrightness) : 50;
         last_value[1] = (lampGBrightness != null) ? Integer.parseInt(lampGBrightness) : 50;
         last_value[2] = (lampBBrightness != null) ? Integer.parseInt(lampBBrightness) : 50;

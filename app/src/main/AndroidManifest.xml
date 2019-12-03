@@ -42,6 +42,8 @@
         <activity
             android:name=".LampSettings"
             android:parentActivityName=".SettingMainActivity" />
+        <activity android:name=".RestLampSettings"
+            android:parentActivityName=".SettingMainActivity"/>
         <activity android:name=".TimerActivity"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"></activity>

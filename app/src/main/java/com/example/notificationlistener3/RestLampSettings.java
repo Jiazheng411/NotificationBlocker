@@ -16,9 +16,9 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class LampSettings extends AppCompatActivity {
+public class RestLampSettings extends AppCompatActivity{
     Button getDefaultValue;
-    Button confirm;
+    Button preview;
     SeekBar brightnessR;
     SeekBar brightnessG;
     SeekBar brightnessB;
@@ -29,48 +29,38 @@ public class LampSettings extends AppCompatActivity {
     String SetGBright;
     String SetBBright;
     SharedPreferences lSharedPreferences;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lamp_settings);
-        brightnessR = findViewById(R.id.brightnessR);
-        brightnessRValue = findViewById(R.id.brightnessRValue);
-        brightnessB = findViewById(R.id.brightnessB);
-        brightnesBValue = findViewById(R.id.brightnessBvalue);
-        brightnessG = findViewById(R.id.brightnessG);
-        brightnessGValue = findViewById(R.id.brightnessGValue);
-        confirm = findViewById(R.id.confirm);
-        getDefaultValue = findViewById(R.id.defaultValue);
+        setContentView(R.layout.rest_lamp_settings);
 
-        lSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
+        brightnessR = findViewById(R.id.restR);
+        brightnessRValue = findViewById(R.id.restRvalue);
+        brightnessB = findViewById(R.id.restB);
+        brightnesBValue = findViewById(R.id.restBvalue);
+        brightnessG = findViewById(R.id.restG);
+        brightnessGValue = findViewById(R.id.restGvalue);
+        preview = findViewById(R.id.restPreview);
+        getDefaultValue = findViewById(R.id.restDefalut);
+
+        lSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         final SharedPreferences.Editor editor = lSharedPreferences.edit();
-        SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY,"147");
-        SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_STUDY,"114");
-        SetBBright = lSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_STUDY,"110");
+        SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_REST,"237");
+        SetGBright = lSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_REST,"220");
+        SetBBright = lSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_REST,"128");
         brightnessR.setProgress(Integer.valueOf(SetRBright));
         brightnessG.setProgress(Integer.valueOf(SetGBright));
         brightnessB.setProgress(Integer.valueOf(SetBBright));
         brightnessRValue.setText("R value: " + SetRBright);
         brightnessGValue.setText("G value: " + SetGBright);
         brightnesBValue.setText("B value: " + SetBBright);
-        /*Log.i("sharedR",SetRBright);
-        Log.i("sharedG",SetGBright);
-        Log.i("sharedB",SetRBright);*/
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        /*lampback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LampSettings.this,SettingMainActivity.class);
-                startActivity(intent);
-            }
-        });*/
-        confirm.setOnClickListener(new View.OnClickListener() {
+        preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //sent value;
@@ -87,8 +77,8 @@ public class LampSettings extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 brightnessRValue.setText("R value: " + String.valueOf(i));
                 SetRBright = String.valueOf(i);
-                editor.putString(Util_String.LAMP_R_BRIGHTNESS_STUDY,String.valueOf(i)).apply();
-        }
+                editor.putString(Util_String.LAMP_R_BRIGHTNESS_REST,String.valueOf(i)).apply();
+            }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -105,7 +95,7 @@ public class LampSettings extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 brightnessGValue.setText("G value: " + String.valueOf(i));
                 SetGBright = String.valueOf(i);
-                editor.putString(Util_String.LAMP_G_BRIGHTNESS_STUDY,String.valueOf(i)).apply();
+                editor.putString(Util_String.LAMP_G_BRIGHTNESS_REST,String.valueOf(i)).apply();
             }
 
             @Override
@@ -123,7 +113,7 @@ public class LampSettings extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 brightnesBValue.setText("B value: " + String.valueOf(i));
                 SetBBright = String.valueOf(i);
-                editor.putString(Util_String.LAMP_B_BRIGHTNESS_STUDY,String.valueOf(i)).apply();
+                editor.putString(Util_String.LAMP_B_BRIGHTNESS_REST,String.valueOf(i)).apply();
             }
 
             @Override
@@ -140,17 +130,19 @@ public class LampSettings extends AppCompatActivity {
         getDefaultValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putString(Util_String.LAMP_R_BRIGHTNESS_STUDY,"147").apply();
-                editor.putString(Util_String.LAMP_G_BRIGHTNESS_STUDY,"114").apply();
-                editor.putString(Util_String.LAMP_B_BRIGHTNESS_STUDY,"110").apply();
-                brightnessR.setProgress(147);
-                brightnessG.setProgress(114);
-                brightnessB.setProgress(110);
-                brightnessRValue.setText("R value: " + "147");
-                brightnessGValue.setText("G value: " + "114");
-                brightnesBValue.setText("B value: " + "110");
+                editor.putString(Util_String.LAMP_R_BRIGHTNESS_REST,"237").apply();
+                editor.putString(Util_String.LAMP_G_BRIGHTNESS_REST,"220").apply();
+                editor.putString(Util_String.LAMP_B_BRIGHTNESS_REST,"128").apply();
+                brightnessR.setProgress(237);
+                brightnessG.setProgress(220);
+                brightnessB.setProgress(128);
+                brightnessRValue.setText("R value: " + "237");
+                brightnessGValue.setText("G value: " + "220");
+                brightnesBValue.setText("B value: " + "128");
             }
         });
+
+
 
     }
 }

@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lamp Settings"
+            android:text="Study Lamp Settings"
             android:textSize="20sp"/>
     </androidx.appcompat.widget.Toolbar>
 
@@ -112,7 +112,7 @@
         android:background="@color/colorPrimary"
         android:text="@string/confirm"
         android:textColor="@android:color/background_light"
-        android:translationX="140dp" />
+        android:layout_gravity="center" />
 
     <Space
         android:layout_width="match_parent"

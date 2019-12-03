@@ -98,7 +98,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             name = view.findViewById(R.id.app_name);
             status = view.findViewById(R.id.app_status);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

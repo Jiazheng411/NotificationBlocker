@@ -26,28 +26,31 @@ public class MainActivity extends AppCompatActivity {
     ImageView settingButton;
     Button startFocusModeButton;
     SharedPreferences mSharedPreferences;
-    private static final int REQUEST_ENABLE_BT = 1;
+    static final int REQUEST_ENABLE_BT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // get notification management permission
         if (!isEnabled()) {
             showNormalDialog();
-            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
-        }
+            }
+
+        // enable bluetooth
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
+            }
+        
         // start the bluetooth Service here
         Intent bluetoothService = new Intent(MainActivity.this, BluetoothSerialService.class);
         startService(bluetoothService);
 
         settingButton = findViewById(R.id.buttonSetting);
         startFocusModeButton = findViewById(R.id.buttonStartFocusMode);
-
         mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         boolean is_blocking = false;
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
+        // set calender app not blocked when starting
         String appsNotBlocking = mSharedPreferences.getString(Util_String.APPS_RECEIVING_NOTIFICATION, "");
         HashSet<String> appsNotBlocked = new HashSet<>(Arrays.asList(appsNotBlocking.split(";")));
         appsNotBlocked.add("com.android.calendar");
@@ -86,6 +90,13 @@ public class MainActivity extends AppCompatActivity {
         String AppsNotBlocking = TextUtils.join(";", appsNotBlocked);
         editor.putString(Util_String.APPS_RECEIVING_NOTIFICATION, AppsNotBlocking).apply();
 
+        // update sharedpreference for default value
+        String focusTime = mSharedPreferences.getString(Util_String.FOCUS_TIME, null);
+        Log.i("Mainactivity", "focus time is" + focusTime);
+        if (focusTime == null) {
+            focusTime = "60";
+            editor.putString(Util_String.FOCUS_TIME, focusTime).apply();
+        }
 
         String restTime = mSharedPreferences.getString(Util_String.RESTING_TIME, null);
         Log.i("Mainactivity", "rest time is" + restTime);
@@ -94,30 +105,40 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(Util_String.RESTING_TIME,restTime).apply();
         }
 
-        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS, null);
-        if (lampRBrightness == null) {
-            lampRBrightness = "50";
-            editor.putString(Util_String.LAMP_R_BRIGHTNESS,lampRBrightness).apply();
+        String lampRBrightnessStudy = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY, null);
+        if (lampRBrightnessStudy == null) {
+            lampRBrightnessStudy = "147";
+            editor.putString(Util_String.LAMP_R_BRIGHTNESS_STUDY,lampRBrightnessStudy).apply();
         }
 
-        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS, null);
-        if (lampGBrightness == null) {
-            lampGBrightness = "50";
-            editor.putString(Util_String.LAMP_G_BRIGHTNESS,lampGBrightness).apply();
+        String lampGBrightnessStudy = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_STUDY, null);
+        if (lampGBrightnessStudy == null) {
+            lampGBrightnessStudy = "114";
+            editor.putString(Util_String.LAMP_G_BRIGHTNESS_STUDY,lampGBrightnessStudy).apply();
         }
 
-        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS, null);
-        if (lampBBrightness == null) {
-            lampBBrightness = "50";
-            editor.putString(Util_String.LAMP_B_BRIGHTNESS,lampBBrightness).apply();
+        String lampBBrightnessStudy = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_STUDY, null);
+        if (lampBBrightnessStudy == null) {
+            lampBBrightnessStudy = "110";
+            editor.putString(Util_String.LAMP_B_BRIGHTNESS_STUDY,lampBBrightnessStudy).apply();
         }
 
+        String lampRBrightnessRest = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_REST, null);
+        if (lampRBrightnessRest == null) {
+            lampRBrightnessRest = "237";
+            editor.putString(Util_String.LAMP_R_BRIGHTNESS_REST,lampRBrightnessRest).apply();
+        }
 
-        String focusTime = mSharedPreferences.getString(Util_String.FOCUS_TIME, null);
-        Log.i("Mainactivity", "focus time is" + focusTime);
-        if (focusTime == null) {
-            focusTime = "60";
-            editor.putString(Util_String.FOCUS_TIME, focusTime).apply();
+        String lampGBrightnessRest = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_REST, null);
+        if (lampGBrightnessRest == null) {
+            lampGBrightnessRest = "220";
+            editor.putString(Util_String.LAMP_G_BRIGHTNESS_REST,lampGBrightnessRest).apply();
+        }
+
+        String lampBBrightnessRest = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_REST, null);
+        if (lampBBrightnessRest == null) {
+            lampBBrightnessRest = "128";
+            editor.putString(Util_String.LAMP_B_BRIGHTNESS_REST,lampBBrightnessRest).apply();
         }
 
         Log.i("MainActivity", "edit shared preference apps_receiving_notification, receive calender notification by default");
@@ -161,12 +182,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // keep screen on all the time
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // stop bluetooth service
         Intent stopBluetoothService = new Intent(MainActivity.this, BluetoothSerialService.class);
         stopService(stopBluetoothService);
     }
