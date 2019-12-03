@@ -38,9 +38,8 @@ public class SettingMainActivity extends AppCompatActivity {
             }
         });
 
-        //lampButton is the "study lamp settings" button on the page, which will lead you to
+        //studylampButton is the "study lamp settings" button on the page, which will lead you to
         //the study lamp setting page
-
         studyLampButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,8 +47,8 @@ public class SettingMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //timeButton is the "time settings" button on the page, which will lead you to
-        //the time setting page
+        //restLampButton is the "rest lamp settings" button on the page, which will lead you to
+        //the rest lamp setting page
         restLampButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +56,8 @@ public class SettingMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //timeButton is the "time settings" button on the page, which will lead you to
+        //the time setting page
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +67,8 @@ public class SettingMainActivity extends AppCompatActivity {
                 Log.i("SettingActivity", "oncreate");
             }
         });
-
+        //buttonToNotifSetting is the "Notification Settings" button on the page, which will lead you to
+        //the blocker setting page
         buttonToNotifSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+//This page describe the rest lamp settings of App
 public class RestLampSettings extends AppCompatActivity{
     Button getDefaultValue;
     Button preview;
@@ -43,6 +44,8 @@ public class RestLampSettings extends AppCompatActivity{
         preview = findViewById(R.id.restPreview);
         getDefaultValue = findViewById(R.id.restDefalut);
 
+        //lSharedPreference saves the value of RGB with an initial value of 237,220,128 which
+        // can be modified by users later
         lSharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         final SharedPreferences.Editor editor = lSharedPreferences.edit();
         SetRBright = lSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_REST,"237");
@@ -60,6 +63,8 @@ public class RestLampSettings extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //Preview is the preview button on the page, after clicking, it will pass the RGB value to
+        //the lamp to set a preview to users
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +77,8 @@ public class RestLampSettings extends AppCompatActivity{
                 sendBroadcast(messager);
             }
         });
+
+        //Users change the R value by seekbar
         brightnessR.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -90,6 +97,8 @@ public class RestLampSettings extends AppCompatActivity{
 
             }
         });
+
+        //Users change the G value by seekbar
         brightnessG.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -108,6 +117,8 @@ public class RestLampSettings extends AppCompatActivity{
 
             }
         });
+
+        //Users change the B value by seekbar
         brightnessB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -127,6 +138,7 @@ public class RestLampSettings extends AppCompatActivity{
             }
         });
 
+        //We pre-set a default RGB value for users to use
         getDefaultValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
