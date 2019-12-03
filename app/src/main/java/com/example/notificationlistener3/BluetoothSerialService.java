@@ -71,9 +71,9 @@ public class BluetoothSerialService extends Service {
         registerReceiver(msgReceiver, messager);
         // get the saved setting value for the lamp from sharedPreferences
         mSharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
-        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS, null);
-        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS, null);
-        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS, null);
+        String lampRBrightness = mSharedPreferences.getString(Util_String.LAMP_R_BRIGHTNESS_STUDY, null);
+        String lampGBrightness = mSharedPreferences.getString(Util_String.LAMP_G_BRIGHTNESS_STUDY, null);
+        String lampBBrightness = mSharedPreferences.getString(Util_String.LAMP_B_BRIGHTNESS_STUDY, null);
         // initialize the last value of the light, in order for resend the message
         last_value[0] = (lampRBrightness != null) ? Integer.parseInt(lampRBrightness) : 50;
         last_value[1] = (lampGBrightness != null) ? Integer.parseInt(lampGBrightness) : 50;
