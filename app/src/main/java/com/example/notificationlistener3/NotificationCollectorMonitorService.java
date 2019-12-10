@@ -15,6 +15,11 @@ import java.util.List;
 public class NotificationCollectorMonitorService extends Service {
 
     /**
+     * Adapted from https://gist.github.com/xinghui/b2ddd8cffe55c4b62f5d8846d5545bf9
+     * Which is created by xinghui on 9/20/16.
+     * This is to solve Android bug which NotificationListenerService is not working
+     * After killing the app.
+     * Android has not solved this bug and this solution is good to resolve the issue.
      * {@link Log#isLoggable(String, int)}
      * <p>
      * IllegalArgumentException is thrown if the tag.length() > 23.
